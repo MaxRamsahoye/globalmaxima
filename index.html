@@ -38,115 +38,17 @@
       background: var(--cream);
       border-radius: 14px;
       min-height: calc(100vh - 16px);
-      max-width: 1600px;
-      margin: 0 auto;
       overflow: hidden;
     }
 
-    /* Header */
-
     .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 34px 48px 20px;
-      gap: 24px;
-    }
-
-    .header-left,
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      flex: 1 1 0;
-    }
-
-    .header-right {
-      justify-content: flex-end;
-    }
-
-    .primary-nav {
-      display: flex;
-      gap: 26px;
-    }
-
-    .primary-nav a,
-    .about-link {
-      font-family: var(--serif);
-      font-size: 15px;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .primary-nav a:hover,
-    .about-link:hover {
-      color: var(--jade);
-    }
-
-    .site-title {
-      flex: 0 0 auto;
-      text-align: center;
-    }
-
-    .site-title a {
-      font-family: var(--serif);
-      font-size: 21px;
-      letter-spacing: 0.06em;
-      color: var(--ink);
-      text-decoration: none;
-      font-variant: small-caps;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 640px) {
-      body {
-        padding: 4px;
-      }
-
-      .site-header {
-        padding: 20px 18px 14px;
-        flex-wrap: wrap;
-      }
-
-      .header-left,
-      .header-right {
-        gap: 16px;
-      }
-
-      .site-title a {
-        font-size: 15px;
-      }
-
-      .primary-nav {
-        gap: 14px;
-      }
-
-      .primary-nav a,
-      .about-link {
-        font-size: 13px;
-      }
+      padding: 8px;
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <header class="site-header">
-      <div class="header-left">
-        <nav class="primary-nav">
-          <a href="#">Issues</a>
-          <a href="#">Field Notes</a>
-        </nav>
-      </div>
-
-      <div class="site-title">
-        <a href="index.html">The Humanist Review of AI</a>
-      </div>
-
-      <div class="header-right">
-        <a class="about-link" href="#">About</a>
-      </div>
-    </header>
+    <header class="site-header"></header>
 
     <main>
     </main>
