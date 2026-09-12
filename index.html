@@ -155,16 +155,16 @@
 
     .layout-grid {
       display: grid;
-      grid-template-columns: 200px minmax(0, 950px);
+      grid-template-columns: 200px minmax(0, 1080px);
       column-gap: 96px;
-      max-width: 1246px;
+      max-width: 1376px;
       margin: 0 auto;
       padding: 0 0 40px;
     }
 
     .toc {
       position: fixed;
-      left: calc(50vw - 663px);
+      left: calc(50vw - 788px);
       top: 50%;
       transform: translateY(-50%);
       width: 200px;
@@ -211,7 +211,7 @@
 
     .main-area {
       grid-column: 2;
-      max-width: 950px;
+      max-width: 1080px;
     }
 
     .article-header {
@@ -249,7 +249,7 @@
     }
 
     .article-body {
-      font-size: 21px;
+      font-size: 23px;
       line-height: 1.3;
       color: #000000;
       counter-reset: sidenote;
@@ -310,13 +310,13 @@
       text-align: center;
       font-weight: 700;
       font-size: 22px;
-      letter-spacing: 0.5em;
+      letter-spacing: 0.25em;
       color: #000000;
       margin: 0;
-      padding: 30px 0 90px;
+      padding: 20px 0 30px;
     }
 
-    @media (max-width: 1550px) {
+    @media (max-width: 1700px) {
       .layout-grid {
         grid-template-columns: 1fr;
         padding: 0 24px 100px;
