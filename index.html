@@ -116,7 +116,7 @@
       right: 0;
       width: 8px;
       height: 0%;
-      background: #000000;
+      background: #ffffff;
       z-index: 41;
     }
 
@@ -220,23 +220,23 @@
     .article-title {
       font-family: var(--serif);
       font-weight: 600;
-      font-size: 46px;
+      font-size: 58px;
       line-height: 1.15;
-      margin: 0 0 18px;
+      margin: 0 0 8px;
       color: #000000;
     }
 
     .article-subtitle {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 20px;
+      font-size: 26px;
       color: #000000;
-      margin: 0 0 28px;
+      margin: 0 0 10px;
     }
 
     .article-byline {
       font-family: var(--serif);
-      font-size: 15px;
+      font-size: 17px;
       letter-spacing: 0.04em;
       color: #000000;
       margin: 0 0 48px;
@@ -246,7 +246,7 @@
 
     .article-body {
       font-size: 19px;
-      line-height: 1.75;
+      line-height: 1.15;
       color: #000000;
       counter-reset: sidenote;
     }
@@ -260,25 +260,25 @@
     .article-body p,
     .article-body ul {
       max-width: 620px;
-      margin: 0 0 26px;
+      margin: 10px 0;
     }
 
-    .diamond-list {
+    .dash-list {
       list-style: none;
       padding: 0;
     }
 
-    .diamond-list li {
+    .dash-list li {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 18px;
     }
 
-    .diamond-bullet {
+    .bullet-mark {
       flex: 0 0 auto;
-      width: 18px;
-      height: 18px;
+      font-size: 19px;
+      line-height: 1;
     }
 
     .sidenote {
@@ -380,23 +380,13 @@
             <section id="sec-subcultures">
               <p>When contemplating this frame, I have come to see a similar great divide arising at the frontier of contemporary theory outside of academia. I find myself positioned between two subcultures (or rather clusters of subcultures):</p>
 
-              <ul class="diamond-list">
+              <ul class="dash-list">
                 <li>
-                  <svg class="diamond-bullet" viewBox="0 0 20 20" aria-hidden="true">
-                    <rect x="7.5" y="0" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="15" y="7.5" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="7.5" y="15" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="0" y="7.5" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                  </svg>
+                  <span class="bullet-mark" aria-hidden="true">&mdash;</span>
                   <span><strong>The PARA-academic space:</strong> encompassing progress studies, AI alignment, rationalism and effective altruism (also existential risk studies).</span>
                 </li>
                 <li>
-                  <svg class="diamond-bullet" viewBox="0 0 20 20" aria-hidden="true">
-                    <rect x="7.5" y="0" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="15" y="7.5" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="7.5" y="15" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                    <rect x="0" y="7.5" width="5" height="5" fill="none" stroke="#000000" stroke-width="1.2"/>
-                  </svg>
+                  <span class="bullet-mark" aria-hidden="true">&mdash;</span>
                   <span><strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..</span>
                 </li>
               </ul>
