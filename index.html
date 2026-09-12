@@ -79,7 +79,6 @@
       background: var(--cream);
       border-radius: 14px 14px 0 0;
       min-height: calc(100vh - 150px);
-      overflow: hidden;
     }
 
     .site-title {
@@ -110,7 +109,7 @@
     .scroll-progress-track {
       position: fixed;
       top: 0;
-      right: 120px;
+      right: 100px;
       width: 12px;
       height: 100%;
       background: rgba(0, 0, 0, 0.08);
@@ -120,7 +119,7 @@
     .scroll-progress-fill {
       position: fixed;
       top: 0;
-      right: 120px;
+      right: 100px;
       width: 12px;
       height: 0%;
       background: #000000;
@@ -158,18 +157,18 @@
 
     .layout-grid {
       display: grid;
-      grid-template-columns: 200px minmax(0, 1248px);
-      column-gap: 96px;
-      max-width: 1544px;
+      grid-template-columns: 260px minmax(0, 760px) 260px;
+      column-gap: 60px;
+      align-items: start;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 0 40px;
     }
 
     .toc {
-      position: fixed;
-      left: calc(50vw - 872px);
-      top: 512px;
-      width: 200px;
+      grid-column: 1;
+      position: sticky;
+      top: 448px;
     }
 
     .toc-label {
@@ -212,13 +211,12 @@
 
     .main-area {
       grid-column: 2;
-      max-width: 1248px;
     }
 
     .article-header {
-      max-width: 1004px;
+      max-width: 760px;
       margin: 0;
-      padding: 130px 0 0 244px;
+      padding: 130px 0 0;
       text-align: left;
     }
 
@@ -251,7 +249,6 @@
       font-size: 23px;
       line-height: 1.3;
       color: #000000;
-      padding-left: 244px;
       counter-reset: sidenote;
     }
 
@@ -281,8 +278,8 @@
     .sidenote {
       float: right;
       clear: right;
-      width: 196px;
-      margin: 4px 0 20px 48px;
+      width: 260px;
+      margin: 4px -320px 20px 0;
       font-family: var(--serif);
       font-style: italic;
       font-size: 16px;
@@ -327,7 +324,7 @@
       padding: 20px 0 30px;
     }
 
-    @media (max-width: 1900px) {
+    @media (max-width: 1600px) {
       .layout-grid {
         grid-template-columns: 1fr;
         padding: 0 24px 100px;
@@ -344,8 +341,8 @@
       }
 
       .article-header,
-      .article-body {
-        padding-left: 0;
+      .article-body p,
+      .article-body ul {
         max-width: 660px;
       }
 
