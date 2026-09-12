@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <title>The Two Subcultures — Global Maxima</title>
   <link rel="icon" href="favicon/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32.png">
@@ -52,7 +61,24 @@
       --ink: #000000;
       --ink-soft: #000000;
       --rule: #e4ddd3;
+      --track-tint: rgba(0, 0, 0, 0.08);
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    html[data-theme="dark"] {
+      --sepia-frame: #2c333b;
+      --sepia: #6b7683;
+      --sepia-dark: #a9b4c0;
+      --cream: #000000;
+      --ink: #ffffff;
+      --ink-soft: #ffffff;
+      --rule: #33383e;
+      --track-tint: rgba(255, 255, 255, 0.15);
+    }
+
+    body,
+    .page {
+      transition: background-color 0.25s ease;
     }
 
     * {
@@ -84,7 +110,7 @@
     .site-title {
       position: absolute;
       top: 50px;
-      right: 40px;
+      left: 40px;
       font-family: var(--serif);
       font-size: 30px;
       letter-spacing: -0.02em;
@@ -96,6 +122,65 @@
 
     .site-title:hover {
       color: var(--sepia-dark);
+    }
+
+    .top-right-group {
+      position: absolute;
+      top: 50px;
+      right: 100px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      min-height: 36px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .theme-toggle:hover {
+      color: var(--sepia-dark);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-moon {
+      display: block;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 24px;
+    }
+
+    .top-menu a {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .top-menu a:hover {
+      border-bottom-color: var(--ink);
     }
 
     html {
@@ -113,7 +198,7 @@
       width: 12px;
       height: calc(100vh - 154px);
       border-radius: 10px 10px 0 0;
-      background: rgba(0, 0, 0, 0.08);
+      background: var(--track-tint);
       z-index: 40;
     }
 
@@ -145,7 +230,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 42;
-      color: #000000;
+      color: var(--sepia-dark);
     }
 
     .scroll-top-btn.visible {
@@ -154,7 +239,7 @@
     }
 
     .scroll-top-btn:hover {
-      color: var(--sepia-dark);
+      color: var(--ink);
     }
 
     .scroll-top-btn svg {
@@ -175,12 +260,12 @@
     .toc {
       grid-column: 1;
       position: sticky;
-      top: 476px;
+      top: 504px;
     }
 
     .toc-label {
       font-family: var(--serif);
-      font-size: 20px;
+      font-size: 26px;
       letter-spacing: 0.02em;
       font-weight: 600;
       color: var(--sepia-dark);
@@ -207,13 +292,13 @@
     }
 
     .toc a {
-      color: #000000;
+      color: var(--ink);
       text-decoration: none;
       border-bottom: 1px solid transparent;
     }
 
     .toc a:hover {
-      border-bottom-color: #000000;
+      border-bottom-color: var(--ink);
     }
 
     .main-area {
@@ -233,14 +318,14 @@
       font-size: 58px;
       line-height: 1.15;
       margin: 0 0 8px;
-      color: #000000;
+      color: var(--ink);
     }
 
     .article-subtitle {
       font-family: var(--serif);
       font-style: italic;
       font-size: 26px;
-      color: #000000;
+      color: var(--ink);
       margin: 0 0 26px;
     }
 
@@ -248,14 +333,14 @@
       font-family: var(--serif);
       font-size: 17px;
       letter-spacing: 0.04em;
-      color: #000000;
-      margin: 0 0 44px;
+      color: var(--ink);
+      margin: 0 0 72px;
     }
 
     .article-body {
       font-size: 23px;
       line-height: 1.3;
-      color: #000000;
+      color: var(--ink);
       counter-reset: sidenote;
     }
 
@@ -291,7 +376,7 @@
       font-style: italic;
       font-size: 16px;
       line-height: 1.5;
-      color: #000000;
+      color: var(--ink);
     }
 
     .sidenote-label {
@@ -365,6 +450,29 @@
 </head>
 <body>
   <a class="site-title" href="index.html">Global Maxima</a>
+
+  <div class="top-right-group">
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="5" y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
+        <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
+        <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
+        <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+      </svg>
+    </button>
+
+    <nav class="top-menu" aria-label="Primary">
+      <a href="#">Library</a>
+    </nav>
+  </div>
 
   <div class="scroll-progress-track"></div>
   <div class="scroll-progress-fill"></div>
@@ -467,6 +575,20 @@
 
       btn.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      var themeToggle = document.querySelector('.theme-toggle');
+      var root = document.documentElement;
+
+      themeToggle.addEventListener('click', function () {
+        var isDark = root.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          root.removeAttribute('data-theme');
+          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+        } else {
+          root.setAttribute('data-theme', 'dark');
+          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+        }
       });
     })();
   </script>
