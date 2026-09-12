@@ -108,20 +108,22 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 150px;
+      top: 164px;
       right: 100px;
       width: 12px;
-      height: calc(100vh - 150px);
+      height: calc(100vh - 164px);
+      border-radius: 6px 6px 0 0;
       background: rgba(0, 0, 0, 0.08);
       z-index: 40;
     }
 
     .scroll-progress-fill {
       position: fixed;
-      top: 150px;
+      top: 164px;
       right: 100px;
       width: 12px;
-      height: 0%;
+      height: 0px;
+      border-radius: 6px 6px 0 0;
       background: #000000;
       z-index: 41;
     }
@@ -431,16 +433,25 @@
 
   <script>
     (function () {
+      var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
+      var CANVAS_TOP = 164;
 
       function update() {
         var doc = document.documentElement;
         var scrollTop = doc.scrollTop || document.body.scrollTop;
         var scrollable = doc.scrollHeight - doc.clientHeight;
         var pct = scrollable > 0 ? Math.min(100, (scrollTop / scrollable) * 100) : 0;
-        var trackHeight = window.innerHeight - 150;
+
+        var topInset = Math.max(0, CANVAS_TOP - scrollTop);
+        var trackHeight = window.innerHeight - topInset;
+
+        track.style.top = topInset + 'px';
+        track.style.height = trackHeight + 'px';
+        fill.style.top = topInset + 'px';
         fill.style.height = (pct / 100 * trackHeight) + 'px';
+
         btn.classList.toggle('visible', scrollTop > 400);
       }
 
