@@ -127,10 +127,10 @@
     .top-right-group {
       position: absolute;
       top: 50px;
-      right: 100px;
+      right: 30px;
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 30px;
       min-height: 36px;
     }
 
@@ -452,6 +452,10 @@
   <a class="site-title" href="index.html">Global Maxima</a>
 
   <div class="top-right-group">
+    <nav class="top-menu" aria-label="Primary">
+      <a href="#">Library</a>
+    </nav>
+
     <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
         <circle cx="12" cy="12" r="4.5"/>
@@ -468,10 +472,6 @@
         <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
       </svg>
     </button>
-
-    <nav class="top-menu" aria-label="Primary">
-      <a href="#">Library</a>
-    </nav>
   </div>
 
   <div class="scroll-progress-track"></div>
