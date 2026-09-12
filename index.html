@@ -66,7 +66,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 125px 100px 0;
+      padding: 150px 100px 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -75,7 +75,7 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 125px);
+      min-height: calc(100vh - 150px);
       overflow: hidden;
     }
 
@@ -155,16 +155,16 @@
 
     .layout-grid {
       display: grid;
-      grid-template-columns: 200px minmax(0, 860px);
-      column-gap: 72px;
-      max-width: 1132px;
+      grid-template-columns: 200px minmax(0, 904px);
+      column-gap: 96px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 0 140px;
     }
 
     .toc {
       position: fixed;
-      left: calc(50vw - 566px);
+      left: calc(50vw - 600px);
       top: 50%;
       transform: translateY(-50%);
       width: 200px;
@@ -211,11 +211,11 @@
 
     .main-area {
       grid-column: 2;
-      max-width: 860px;
+      max-width: 904px;
     }
 
     .article-header {
-      max-width: 620px;
+      max-width: 660px;
       margin: 0;
       padding: 130px 0 0;
       text-align: left;
@@ -255,7 +255,7 @@
       counter-reset: sidenote;
     }
 
-    .article-body section::after {
+    .article-body::after {
       content: '';
       display: table;
       clear: both;
@@ -263,7 +263,7 @@
 
     .article-body p,
     .article-body ul {
-      max-width: 620px;
+      max-width: 660px;
       margin: 10px 0;
     }
 
@@ -282,7 +282,7 @@
       float: right;
       clear: right;
       width: 196px;
-      margin: 4px 0 20px 36px;
+      margin: 4px 0 20px 48px;
       font-family: var(--serif);
       font-style: italic;
       font-size: 16px;
@@ -305,7 +305,16 @@
       content: counter(sidenote) '.';
     }
 
-    @media (max-width: 1400px) {
+    .dinkus {
+      text-align: center;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.5em;
+      color: #000000;
+      margin: 50px 0 0;
+    }
+
+    @media (max-width: 1500px) {
       .layout-grid {
         grid-template-columns: 1fr;
         padding: 0 24px 100px;
@@ -397,6 +406,8 @@
               <p>As well as providing new conceptual handles for talking about this matter, in this article I&rsquo;ll also briefly set out some of the affinities and antagonisms I see between the two subcultures.</p>
             </section>
           </div>
+
+          <p class="dinkus">***</p>
         </article>
       </main>
     </div>
@@ -413,7 +424,7 @@
         var scrollable = doc.scrollHeight - doc.clientHeight;
         var pct = scrollable > 0 ? Math.min(100, (scrollTop / scrollable) * 100) : 0;
         fill.style.height = pct + '%';
-        btn.classList.toggle('visible', scrollTop > window.innerHeight);
+        btn.classList.toggle('visible', scrollTop > 400);
       }
 
       window.addEventListener('scroll', update, { passive: true });
