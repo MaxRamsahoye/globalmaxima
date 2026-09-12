@@ -128,8 +128,8 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      width: 46px;
-      height: 46px;
+      width: 34px;
+      height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -149,22 +149,22 @@
     }
 
     .scroll-top-btn svg {
-      width: 26px;
-      height: 26px;
+      width: 18px;
+      height: 18px;
     }
 
     .layout-grid {
       display: grid;
-      grid-template-columns: 200px minmax(0, 904px);
+      grid-template-columns: 200px minmax(0, 950px);
       column-gap: 96px;
-      max-width: 1200px;
+      max-width: 1246px;
       margin: 0 auto;
-      padding: 0 0 140px;
+      padding: 0 0 40px;
     }
 
     .toc {
       position: fixed;
-      left: calc(50vw - 600px);
+      left: calc(50vw - 663px);
       top: 50%;
       transform: translateY(-50%);
       width: 200px;
@@ -211,7 +211,7 @@
 
     .main-area {
       grid-column: 2;
-      max-width: 904px;
+      max-width: 950px;
     }
 
     .article-header {
@@ -306,15 +306,17 @@
     }
 
     .dinkus {
+      font-family: var(--serif);
       text-align: center;
       font-weight: 700;
       font-size: 22px;
       letter-spacing: 0.5em;
       color: #000000;
-      margin: 50px 0 0;
+      margin: 0;
+      padding: 30px 0 90px;
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1550px) {
       .layout-grid {
         grid-template-columns: 1fr;
         padding: 0 24px 100px;
@@ -347,7 +349,7 @@
   <div class="scroll-progress-fill"></div>
 
   <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 26 26" fill="none" stroke="#000000" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <svg viewBox="0 0 26 26" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
       <polygon points="13,4 23,21 3,21"/>
     </svg>
   </button>
@@ -406,11 +408,11 @@
               <p>As well as providing new conceptual handles for talking about this matter, in this article I&rsquo;ll also briefly set out some of the affinities and antagonisms I see between the two subcultures.</p>
             </section>
           </div>
-
-          <p class="dinkus">***</p>
         </article>
       </main>
     </div>
+
+    <p class="dinkus">***</p>
   </div>
 
   <script>
