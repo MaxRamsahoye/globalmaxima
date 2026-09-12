@@ -145,6 +145,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 42;
+      color: #000000;
     }
 
     .scroll-top-btn.visible {
@@ -152,9 +153,13 @@
       pointer-events: auto;
     }
 
+    .scroll-top-btn:hover {
+      color: var(--sepia-dark);
+    }
+
     .scroll-top-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
     }
 
     .layout-grid {
@@ -365,8 +370,9 @@
   <div class="scroll-progress-fill"></div>
 
   <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 26 26" fill="#8a6d42" stroke="#8a6d42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-      <polygon points="13,5 22,20 4,20"/>
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
+      <polygon points="3,23 13,16.5 23,23 13,3"/>
+      <line x1="13" y1="16.5" x2="13" y2="3"/>
     </svg>
   </button>
 
