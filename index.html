@@ -38,9 +38,9 @@
     }
 
     :root {
-      --sepia-frame: #6f4e2e;
-      --sepia: #55381f;
-      --sepia-dark: #3c2716;
+      --sepia-frame: #e6d6b8;
+      --sepia: #a98a5c;
+      --sepia-dark: #8a6d42;
       --cream: #f8f4ee;
       --ink: #1c1a17;
       --ink-soft: #4a4540;
@@ -57,10 +57,11 @@
     }
 
     body {
+      position: relative;
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 100px;
+      padding: 100px 100px 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -68,18 +69,15 @@
 
     .page {
       background: var(--cream);
-      border-radius: 14px;
-      min-height: calc(100vh - 200px);
+      border-radius: 14px 14px 0 0;
+      min-height: calc(100vh - 100px);
       overflow: hidden;
     }
 
-    .site-header {
-      display: flex;
-      justify-content: flex-end;
-      padding: 24px 32px;
-    }
-
     .site-title {
+      position: absolute;
+      top: 40px;
+      right: 40px;
       font-family: var(--serif);
       font-size: 20px;
       letter-spacing: 0.06em;
@@ -91,15 +89,15 @@
     }
 
     .site-title:hover {
-      color: var(--sepia);
+      color: var(--sepia-dark);
     }
   </style>
 </head>
 <body>
+  <a class="site-title" href="index.html">Global Maxima</a>
+
   <div class="page">
-    <header class="site-header">
-      <a class="site-title" href="index.html">Global Maxima</a>
-    </header>
+    <header class="site-header"></header>
 
     <main>
     </main>
