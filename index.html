@@ -153,14 +153,17 @@
       display: grid;
       grid-template-columns: 200px minmax(0, 840px);
       column-gap: 48px;
-      padding: 0 32px 140px;
+      max-width: 1088px;
+      margin: 0 auto;
+      padding: 0 0 140px;
     }
 
     .toc {
-      position: sticky;
-      top: 50vh;
+      position: fixed;
+      left: calc(50vw - 544px);
+      top: 50%;
       transform: translateY(-50%);
-      align-self: start;
+      width: 200px;
     }
 
     .toc-label {
@@ -203,6 +206,7 @@
     }
 
     .main-area {
+      grid-column: 2;
       max-width: 840px;
     }
 
@@ -244,6 +248,7 @@
       font-size: 19px;
       line-height: 1.75;
       color: #000000;
+      counter-reset: sidenote;
     }
 
     .article-body section::after {
@@ -286,6 +291,7 @@
       font-size: 14px;
       line-height: 1.55;
       color: #000000;
+      counter-increment: sidenote;
     }
 
     .sidenote-label {
@@ -296,6 +302,10 @@
       text-transform: uppercase;
       color: var(--sepia-dark);
       margin-bottom: 4px;
+    }
+
+    .sidenote-label::before {
+      content: counter(sidenote) '.';
     }
 
     @media (max-width: 1400px) {
@@ -309,6 +319,7 @@
       }
 
       .main-area {
+        grid-column: 1;
         max-width: 660px;
         margin: 0 auto;
       }
@@ -361,7 +372,7 @@
             <section id="sec-intro">
               <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959) is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
 
-              <aside class="sidenote"><span class="sidenote-label">Note</span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
+              <aside class="sidenote"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
 
               <p>Any cursory observation of technological acceleration and its consequences &ndash; from crossing planetary boundaries to advancing AI &ndash; will show that this problem has persisted well into the 21st century, with the sciences (means or instrumentality) taking precedent over the humanities (ends or values).</p>
             </section>
@@ -390,13 +401,13 @@
                 </li>
               </ul>
 
-              <aside class="sidenote"><span class="sidenote-label">Note</span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
+              <aside class="sidenote"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
             </section>
 
             <section id="sec-divergence">
               <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
 
-              <aside class="sidenote"><span class="sidenote-label">Note</span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
+              <aside class="sidenote"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
 
               <p>To the extent that there are those within each subculture that are aware of the other, there is little explicit mention or constructive interaction between the two; despite significant overlap in areas of interest and more interestingly, critical points of divergence.</p>
             </section>
