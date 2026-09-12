@@ -111,7 +111,7 @@
       position: fixed;
       top: 0;
       right: 0;
-      width: 8px;
+      width: 16px;
       height: 100%;
       background: rgba(0, 0, 0, 0.08);
       z-index: 40;
@@ -121,7 +121,7 @@
       position: fixed;
       top: 0;
       right: 0;
-      width: 8px;
+      width: 16px;
       height: 0%;
       background: #ffffff;
       z-index: 41;
@@ -175,11 +175,10 @@
 
     .toc-label {
       font-family: var(--serif);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 0.02em;
       font-weight: 600;
-      color: #000000;
+      color: var(--sepia-dark);
       margin: 0 0 16px;
     }
 
@@ -290,7 +289,6 @@
       font-size: 16px;
       line-height: 1.5;
       color: #000000;
-      counter-increment: sidenote;
     }
 
     .sidenote-label {
@@ -305,6 +303,18 @@
 
     .sidenote-label::before {
       content: counter(sidenote) '.';
+    }
+
+    .sidenote-ref {
+      counter-increment: sidenote;
+      font-size: 0.65em;
+      color: var(--sepia-dark);
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .sidenote-ref::before {
+      content: counter(sidenote);
     }
 
     .dinkus {
@@ -351,8 +361,8 @@
   <div class="scroll-progress-fill"></div>
 
   <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 26 26" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
-      <polygon points="13,4 23,21 3,21"/>
+    <svg viewBox="0 0 26 26" fill="#ffffff" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <polygon points="13,5 22,20 4,20"/>
     </svg>
   </button>
 
@@ -361,7 +371,7 @@
 
     <div class="layout-grid">
       <nav class="toc" aria-label="Contents">
-        <p class="toc-label">Contents</p>
+        <p class="toc-label">The Two Subcultures</p>
         <ol>
           <li><a href="#sec-intro">Introduction</a></li>
           <li><a href="#sec-subcultures">The two subcultures</a></li>
@@ -380,7 +390,7 @@
 
           <div class="article-body">
             <section id="sec-intro">
-              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959) is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
+              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959)<sup class="sidenote-ref"></sup> is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
 
               <aside class="sidenote"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
 
@@ -392,14 +402,14 @@
 
               <ul class="dash-list">
                 <li>&mdash;&nbsp;<strong>The PARA-academic space:</strong> encompassing progress studies, AI alignment, rationalism and effective altruism (also existential risk studies).</li>
-                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..</li>
+                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..<sup class="sidenote-ref"></sup></li>
               </ul>
 
               <aside class="sidenote"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
             </section>
 
             <section id="sec-divergence">
-              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
+              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement<sup class="sidenote-ref"></sup> &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
 
               <aside class="sidenote"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
 
