@@ -62,7 +62,12 @@
       --ink-soft: #000000;
       --rule: #e4ddd3;
       --track-tint: rgba(0, 0, 0, 0.08);
+      --frame-margin: 100px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    body.wide {
+      --frame-margin: 0px;
     }
 
     html[data-theme="dark"] {
@@ -76,7 +81,6 @@
       --track-tint: rgba(255, 255, 255, 0.15);
     }
 
-    body,
     .page {
       transition: background-color 0.25s ease;
     }
@@ -95,10 +99,11 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 150px 100px 0;
+      padding: 150px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease;
     }
 
     .page {
@@ -194,29 +199,39 @@
     .scroll-progress-track {
       position: fixed;
       top: 154px;
-      right: 104px;
+      right: calc(var(--frame-margin) + 4px);
       width: 12px;
       height: calc(100vh - 154px);
       border-radius: 10px 10px 0 0;
       background: var(--track-tint);
       z-index: 40;
+      opacity: 0;
+      transition: right 0.6s ease, opacity 0.3s ease;
     }
 
     .scroll-progress-fill {
       position: fixed;
       top: 154px;
-      right: 104px;
+      right: calc(var(--frame-margin) + 4px);
       width: 12px;
       height: 0px;
       border-radius: 10px 10px 0 0;
       background: var(--sepia-dark);
       z-index: 41;
+      opacity: 0;
+      transition: right 0.6s ease, opacity 0.3s ease;
+    }
+
+    body.wide .scroll-progress-track,
+    body.wide .scroll-progress-fill {
+      opacity: 1;
+      transition: right 0.6s ease, opacity 0.4s ease 0.6s;
     }
 
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
-      right: 140px;
+      right: calc(var(--frame-margin) + 40px);
       width: 34px;
       height: 34px;
       display: flex;
@@ -228,7 +243,7 @@
       cursor: pointer;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, right 0.6s ease;
       z-index: 42;
       color: var(--sepia-dark);
     }
@@ -249,10 +264,10 @@
 
     .layout-grid {
       display: grid;
-      grid-template-columns: 260px minmax(0, 760px) 260px;
-      column-gap: 60px;
+      grid-template-columns: 300px minmax(0, 760px) 300px;
+      column-gap: 90px;
       align-items: start;
-      max-width: 1400px;
+      max-width: 1540px;
       margin: 0 auto;
       padding: 0 0 40px;
     }
@@ -261,6 +276,15 @@
       grid-column: 1;
       position: sticky;
       top: 504px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    body.wide .toc {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 0.4s ease 0.6s;
     }
 
     .toc-label {
@@ -370,13 +394,20 @@
     .sidenote {
       float: right;
       clear: right;
-      width: 260px;
-      margin: 4px -350px 20px 0;
+      width: 300px;
+      margin: 4px -420px 20px 0;
       font-family: var(--serif);
       font-style: italic;
       font-size: 16px;
       line-height: 1.5;
       color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    body.wide .sidenote {
+      opacity: 1;
+      transition: opacity 0.4s ease 0.6s;
     }
 
     .sidenote-label {
@@ -416,7 +447,7 @@
       padding: 20px 0 30px;
     }
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1800px) {
       .layout-grid {
         grid-template-columns: 1fr;
         padding: 0 24px 100px;
@@ -567,6 +598,7 @@
         fill.style.height = (pct / 100 * trackHeight) + 'px';
 
         btn.classList.toggle('visible', pct > 20);
+        document.body.classList.toggle('wide', scrollTop > 10);
       }
 
       window.addEventListener('scroll', update, { passive: true });
