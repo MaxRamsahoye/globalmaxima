@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
-
 :root {
-  --coral-frame: #dd9c8a;
-  --coral: #e8624f;
-  --coral-dark: #d9503d;
+  --jade-frame: #3f8f72;
+  --jade: #2b7a5c;
+  --jade-dark: #1e5c45;
   --cream: #f8f4ee;
   --ink: #1c1a17;
   --ink-soft: #4a4540;
   --rule: #e4ddd3;
+  --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
 }
 
 * {
@@ -15,15 +14,15 @@
 }
 
 html {
-  background: var(--coral-frame);
+  background: var(--jade-frame);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--coral-frame);
-  padding: 22px;
-  font-family: 'Lora', Georgia, serif;
+  background: var(--jade-frame);
+  padding: 8px;
+  font-family: var(--serif);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
@@ -31,7 +30,7 @@ body {
 .page {
   background: var(--cream);
   border-radius: 14px;
-  min-height: calc(100vh - 44px);
+  min-height: calc(100vh - 16px);
   max-width: 1600px;
   margin: 0 auto;
   overflow: hidden;
@@ -59,22 +58,6 @@ body {
   justify-content: flex-end;
 }
 
-.icon-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  color: var(--ink);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-}
-
-.icon-btn svg {
-  width: 19px;
-  height: 19px;
-}
-
 .primary-nav {
   display: flex;
   gap: 26px;
@@ -82,7 +65,7 @@ body {
 
 .primary-nav a,
 .about-link {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--serif);
   font-size: 15px;
   color: var(--ink);
   text-decoration: none;
@@ -90,7 +73,7 @@ body {
 
 .primary-nav a:hover,
 .about-link:hover {
-  color: var(--coral);
+  color: var(--jade);
 }
 
 .site-title {
@@ -99,7 +82,7 @@ body {
 }
 
 .site-title a {
-  font-family: 'Playfair Display', 'Lora', Georgia, serif;
+  font-family: var(--serif);
   font-size: 21px;
   letter-spacing: 0.06em;
   color: var(--ink);
@@ -119,16 +102,16 @@ body {
 }
 
 .kicker {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--serif);
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--jade);
   margin: 0 0 22px;
 }
 
 .article-header h1 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--serif);
   font-weight: 500;
   font-size: 47px;
   line-height: 1.18;
@@ -137,7 +120,7 @@ body {
 }
 
 .deck {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--serif);
   font-size: 19px;
   line-height: 1.55;
   color: var(--ink-soft);
@@ -184,12 +167,12 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: var(--coral);
+  background: var(--jade);
   color: var(--cream);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--serif);
   font-size: 15px;
 }
 
@@ -219,19 +202,19 @@ body {
 }
 
 .article-body p.lede::first-letter {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--serif);
   font-size: 64px;
   float: left;
   line-height: 0.8;
   padding: 8px 10px 0 0;
-  color: var(--coral);
+  color: var(--jade);
 }
 
 .article-body blockquote {
   margin: 40px 0;
   padding-left: 22px;
-  border-left: 3px solid var(--coral);
-  font-family: 'Playfair Display', serif;
+  border-left: 3px solid var(--jade);
+  font-family: var(--serif);
   font-style: italic;
   font-size: 24px;
   line-height: 1.5;
@@ -239,7 +222,7 @@ body {
 }
 
 .article-body h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--serif);
   font-weight: 500;
   font-size: 28px;
   margin: 48px 0 20px;
@@ -258,7 +241,7 @@ body {
 
 @media (max-width: 640px) {
   body {
-    padding: 10px;
+    padding: 4px;
   }
 
   .site-header {
