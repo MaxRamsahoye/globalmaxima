@@ -108,22 +108,22 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 164px;
-      right: 100px;
+      top: 154px;
+      right: 104px;
       width: 12px;
-      height: calc(100vh - 164px);
-      border-radius: 6px 6px 0 0;
+      height: calc(100vh - 154px);
+      border-radius: 10px 10px 0 0;
       background: rgba(0, 0, 0, 0.08);
       z-index: 40;
     }
 
     .scroll-progress-fill {
       position: fixed;
-      top: 164px;
-      right: 100px;
+      top: 154px;
+      right: 104px;
       width: 12px;
       height: 0px;
-      border-radius: 6px 6px 0 0;
+      border-radius: 10px 10px 0 0;
       background: #000000;
       z-index: 41;
     }
@@ -436,7 +436,7 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 164;
+      var CANVAS_TOP = 154;
 
       function update() {
         var doc = document.documentElement;
@@ -452,7 +452,7 @@
         fill.style.top = topInset + 'px';
         fill.style.height = (pct / 100 * trackHeight) + 'px';
 
-        btn.classList.toggle('visible', scrollTop > 400);
+        btn.classList.toggle('visible', pct > 20);
       }
 
       window.addEventListener('scroll', update, { passive: true });
