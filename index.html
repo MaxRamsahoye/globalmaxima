@@ -615,7 +615,8 @@
         var doc = document.documentElement;
         var scrollTop = doc.scrollTop || document.body.scrollTop;
         var scrollable = doc.scrollHeight - doc.clientHeight;
-        var pct = scrollable > 0 ? Math.min(100, (scrollTop / scrollable) * 100) : 0;
+        var canvasScrollable = scrollable - CANVAS_TOP;
+        var pct = canvasScrollable > 0 ? Math.min(100, Math.max(0, ((scrollTop - CANVAS_TOP) / canvasScrollable) * 100)) : 0;
 
         var topInset = Math.max(0, CANVAS_TOP - scrollTop);
         var trackHeight = window.innerHeight - topInset;
