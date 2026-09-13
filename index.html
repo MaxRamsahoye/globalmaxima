@@ -92,7 +92,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 430px var(--frame-margin) 0;
+      padding: 310px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 430px);
+      min-height: calc(100vh - 310px);
       transition: background-color 0.25s ease;
     }
 
@@ -198,10 +198,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 434px;
+      top: 314px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 434px);
+      height: calc(100vh - 314px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -211,7 +211,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 434px;
+      top: 314px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -423,7 +423,7 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 434;
+      var CANVAS_TOP = 314;
 
       function update() {
         var doc = document.documentElement;
