@@ -334,8 +334,90 @@
     }
 
     @media (max-width: 860px) {
+      :root {
+        --frame-margin: 60px;
+      }
+
+      body {
+        padding-top: 220px;
+      }
+
+      .page {
+        min-height: calc(100vh - 220px);
+      }
+
+      .brand {
+        padding: 48px 56px 32px;
+      }
+
+      .site-title {
+        font-size: 38px;
+      }
+
+      .site-quote,
+      .site-description {
+        font-size: 17px;
+        white-space: normal;
+        max-width: 100%;
+      }
+
       .library-grid {
-        padding: 90px 24px 100px;
+        padding: 60px 24px 100px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --frame-margin: 20px;
+      }
+
+      body {
+        padding-top: 190px;
+      }
+
+      .page {
+        min-height: calc(100vh - 190px);
+      }
+
+      .top-right-group {
+        top: 24px;
+        right: 24px;
+      }
+
+      .brand {
+        padding: 56px 56px 24px;
+        gap: 12px;
+      }
+
+      .site-title {
+        font-size: 30px;
+      }
+
+      .site-quote,
+      .site-description {
+        font-size: 15px;
+        white-space: normal;
+        max-width: 100%;
+      }
+
+      .library-grid {
+        padding: 44px 20px 80px;
+      }
+
+      .article-entry {
+        padding: 28px 0;
+      }
+
+      .article-entry-title {
+        font-size: 26px;
+      }
+
+      .article-entry-subtitle {
+        font-size: 16px;
+      }
+
+      .article-entry-desc {
+        font-size: 16px;
       }
     }
   </style>
@@ -423,12 +505,13 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 314;
+      var page = document.querySelector('.page');
 
       function update() {
         var doc = document.documentElement;
         var scrollTop = doc.scrollTop || document.body.scrollTop;
         var scrollable = doc.scrollHeight - doc.clientHeight;
+        var CANVAS_TOP = page.offsetTop;
         var canvasScrollable = scrollable - CANVAS_TOP;
         var pct = canvasScrollable > 0 ? Math.min(100, Math.max(0, ((scrollTop - CANVAS_TOP) / canvasScrollable) * 100)) : 0;
 
