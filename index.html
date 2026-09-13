@@ -71,13 +71,13 @@
     }
 
     html[data-theme="dark"] {
-      --sepia-frame: #181c20;
-      --sepia: #454e58;
-      --sepia-dark: #98a3af;
+      --sepia-frame: #0d1330;
+      --sepia: #2c3760;
+      --sepia-dark: #9fb0d9;
       --cream: #000000;
       --ink: #ffffff;
       --ink-soft: #ffffff;
-      --rule: #2a2e33;
+      --rule: #232c4c;
       --track-tint: rgba(255, 255, 255, 0.15);
     }
 
@@ -202,7 +202,7 @@
       right: calc(var(--frame-margin) + 4px);
       width: 12px;
       height: calc(100vh - 154px);
-      border-radius: 10px 10px 0 0;
+      border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
       opacity: 0;
@@ -215,7 +215,7 @@
       right: calc(var(--frame-margin) + 4px);
       width: 12px;
       height: 0px;
-      border-radius: 10px 10px 0 0;
+      border-radius: 0;
       background: var(--sepia-dark);
       z-index: 41;
       opacity: 0;
@@ -258,8 +258,8 @@
     }
 
     .scroll-top-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
     }
 
     .layout-grid {
@@ -276,6 +276,7 @@
       grid-column: 1;
       position: sticky;
       top: 504px;
+      transform: translateX(-40px);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -440,7 +441,7 @@
       font-family: 'Cormorant Garamond', var(--serif);
       text-align: center;
       font-weight: 700;
-      font-size: 34px;
+      font-size: 28px;
       letter-spacing: 0.25em;
       color: var(--sepia-dark);
       margin: 0;
