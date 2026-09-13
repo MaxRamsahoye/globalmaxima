@@ -58,7 +58,7 @@
       --ink-soft: #000000;
       --rule: #e4ddd3;
       --track-tint: rgba(0, 0, 0, 0.08);
-      --frame-margin: 430px;
+      --frame-margin: 300px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
@@ -97,7 +97,7 @@
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
-      transition: background-color 0.25s ease, opacity 0.3s ease;
+      transition: background-color 0.25s ease, opacity 0.7s ease-in-out;
     }
 
     body.page-visible {
@@ -427,7 +427,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 300);
+        }, 700);
       });
 
       var track = document.querySelector('.scroll-progress-track');
