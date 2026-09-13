@@ -21,6 +21,9 @@
     })();
   </script>
   <title>Library — Global Maxima</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'ET Bembo';
@@ -55,12 +58,8 @@
       --ink-soft: #000000;
       --rule: #e4ddd3;
       --track-tint: rgba(0, 0, 0, 0.08);
-      --frame-margin: 100px;
+      --frame-margin: 300px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
-    }
-
-    body.wide {
-      --frame-margin: 0px;
     }
 
     html[data-theme="dark"] {
@@ -97,7 +96,7 @@
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
-      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease;
+      transition: background-color 0.25s ease;
     }
 
     .page {
@@ -195,7 +194,7 @@
       background: var(--track-tint);
       z-index: 40;
       opacity: 0;
-      transition: right 0.6s ease, opacity 0.3s ease;
+      transition: opacity 0.3s ease;
     }
 
     .scroll-progress-fill {
@@ -208,7 +207,7 @@
       background: var(--sepia-dark);
       z-index: 41;
       opacity: 0;
-      transition: right 0.6s ease, opacity 0.3s ease;
+      transition: opacity 0.3s ease;
     }
 
     body.past-frame .scroll-progress-track,
@@ -231,7 +230,7 @@
       cursor: pointer;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease, right 0.6s ease;
+      transition: opacity 0.3s ease;
       z-index: 42;
       color: var(--sepia-dark);
     }
@@ -253,7 +252,7 @@
     .library-grid {
       max-width: 760px;
       margin: 0 auto;
-      padding: 90px 0 100px;
+      padding: 90px 0 40px;
     }
 
     .article-list {
@@ -264,11 +263,16 @@
 
     .article-entry {
       border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
       padding: 40px 0;
     }
 
     .article-entry:first-child {
       border-top: none;
+    }
+
+    .article-entry:last-child {
+      border-bottom: none;
     }
 
     .article-entry-link {
@@ -304,6 +308,17 @@
       line-height: 1.5;
       color: var(--ink);
       margin: 0;
+    }
+
+    .dinkus {
+      font-family: 'Cormorant Garamond', var(--serif);
+      text-align: center;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.25em;
+      color: var(--sepia-dark);
+      margin: 0;
+      padding: 20px 0 30px;
     }
 
     @media (max-width: 860px) {
@@ -360,6 +375,8 @@
         </li>
       </ul>
     </div>
+
+    <p class="dinkus">***</p>
   </div>
 
   <script>
@@ -385,7 +402,6 @@
         fill.style.height = (pct / 100 * trackHeight) + 'px';
 
         btn.classList.toggle('visible', pct > 20);
-        document.body.classList.toggle('wide', scrollTop > 10);
         document.body.classList.toggle('past-frame', scrollTop > CANVAS_TOP);
       }
 
