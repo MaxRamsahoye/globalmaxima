@@ -12,14 +12,11 @@
       } catch (e) {}
     })();
   </script>
-  <title>The Two Subcultures — Global Maxima</title>
+  <title>Library — Global Maxima</title>
   <link rel="icon" href="favicon/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="favicon/favicon-192.png">
   <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'ET Bembo';
@@ -42,14 +39,6 @@
       src: url('fonts/ETBembo-DisplayItalic.woff2') format('woff2');
       font-weight: 400;
       font-style: italic;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'ET Bembo Lining';
-      src: url('fonts/ETBembo-RomanLF.woff2') format('woff2');
-      font-weight: 400;
-      font-style: normal;
       font-display: swap;
     }
 
@@ -81,10 +70,6 @@
       --track-tint: rgba(255, 255, 255, 0.15);
     }
 
-    .page {
-      transition: background-color 0.25s ease;
-    }
-
     * {
       box-sizing: border-box;
     }
@@ -92,6 +77,11 @@
     html {
       background: var(--sepia-frame);
       scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
     }
 
     body {
@@ -99,7 +89,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 150px var(--frame-margin) 0;
+      padding: 300px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -109,21 +99,27 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 150px);
+      min-height: calc(100vh - 300px);
+      transition: background-color 0.25s ease;
     }
 
     .brand {
       position: absolute;
-      top: 50px;
-      left: 40px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 300px;
       display: flex;
-      align-items: baseline;
-      gap: 34px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      text-align: center;
     }
 
     .site-title {
       font-family: var(--serif);
-      font-size: 30px;
+      font-size: 48px;
       letter-spacing: -0.02em;
       color: var(--ink);
       text-decoration: none;
@@ -138,7 +134,7 @@
     .site-quote {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 18px;
+      font-size: 21px;
       color: var(--sepia-dark);
       white-space: nowrap;
     }
@@ -185,37 +181,12 @@
       display: block;
     }
 
-    .top-menu {
-      display: flex;
-      gap: 24px;
-    }
-
-    .top-menu a {
-      font-family: var(--serif);
-      font-size: 17px;
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-    }
-
-    .top-menu a:hover {
-      border-bottom-color: var(--ink);
-    }
-
-    html {
-      scrollbar-width: none;
-    }
-
-    html::-webkit-scrollbar {
-      display: none;
-    }
-
     .scroll-progress-track {
       position: fixed;
-      top: 154px;
+      top: 304px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 154px);
+      height: calc(100vh - 304px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -225,7 +196,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 154px;
+      top: 304px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -275,246 +246,76 @@
       height: 18px;
     }
 
-    .layout-grid {
-      display: grid;
-      grid-template-columns: 300px minmax(0, 760px) 300px;
-      column-gap: 90px;
-      align-items: start;
-      max-width: 1540px;
+    .library-grid {
+      max-width: 760px;
       margin: 0 auto;
-      padding: 0 0 40px;
+      padding: 90px 0 100px;
     }
 
-    .toc {
-      grid-column: 1;
-      position: sticky;
-      top: 504px;
-      transform: translateX(-40px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+    .article-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
-    body.wide .toc {
-      opacity: 1;
-      pointer-events: auto;
-      transition: opacity 0.4s ease 0.6s;
+    .article-entry {
+      border-top: 1px solid var(--rule);
+      padding: 40px 0;
     }
 
-    .toc-label {
+    .article-entry:first-child {
+      border-top: none;
+    }
+
+    .article-entry-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .article-entry-title {
       font-family: var(--serif);
-      font-size: 26px;
-      letter-spacing: 0.02em;
       font-weight: 600;
+      font-size: 34px;
+      line-height: 1.2;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+
+    .article-entry-link:hover .article-entry-title {
+      color: var(--sepia-dark);
+    }
+
+    .article-entry-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 19px;
       color: var(--sepia-dark);
       margin: 0 0 16px;
     }
 
-    .toc ol {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      counter-reset: toc-counter;
-    }
-
-    .toc li {
-      counter-increment: toc-counter;
-      margin-bottom: 14px;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-
-    .toc li::before {
-      content: counter(toc-counter) '. ';
-      color: var(--sepia-dark);
-    }
-
-    .toc a {
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-    }
-
-    .toc a:hover {
-      border-bottom-color: var(--ink);
-    }
-
-    .main-area {
-      grid-column: 2;
-    }
-
-    .article-header {
-      max-width: 760px;
-      margin: 0;
-      padding: 130px 0 0;
-      text-align: left;
-    }
-
-    .article-title {
+    .article-entry-desc {
       font-family: var(--serif);
-      font-weight: 600;
-      font-size: 58px;
-      line-height: 1.15;
-      margin: 0 0 8px;
-      color: var(--ink);
-    }
-
-    .article-subtitle {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 26px;
-      color: var(--ink);
-      margin: 0 0 26px;
-    }
-
-    .article-byline {
-      font-family: var(--serif);
-      font-size: 17px;
-      letter-spacing: 0.04em;
-      color: var(--ink);
-      margin: 0 0 72px;
-    }
-
-    .article-body {
-      font-size: 23px;
-      line-height: 1.3;
-      color: var(--ink);
-      counter-reset: sidenote;
-    }
-
-    .article-body::after {
-      content: '';
-      display: table;
-      clear: both;
-    }
-
-    .article-body p,
-    .article-body ul {
-      max-width: 760px;
-    }
-
-    .article-body p {
-      margin: 10px 0;
-    }
-
-    .article-body ul {
-      margin: 15px 0;
-    }
-
-    .dash-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .dash-list li {
-      padding-left: 1.3em;
-      text-indent: -1.3em;
-      margin-bottom: 18px;
-    }
-
-    .dash-list li:last-child {
-      margin-bottom: 0;
-    }
-
-    .sidenote {
-      float: right;
-      clear: right;
-      width: 300px;
-      margin: 4px -420px 20px 0;
-      font-family: var(--serif);
-      font-style: normal;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.5;
       color: var(--ink);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    body.wide .sidenote {
-      opacity: 1;
-      transition: opacity 0.4s ease 0.6s;
-    }
-
-    .sidenote-label {
-      display: block;
-      font-style: normal;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sepia-dark);
-      margin-bottom: 4px;
-    }
-
-    .sidenote-label::before {
-      content: counter(sidenote) '.';
-    }
-
-    .sidenote-ref {
-      counter-increment: sidenote;
-      font-size: 0.65em;
-      color: var(--sepia-dark);
-      vertical-align: super;
-      line-height: 0;
-    }
-
-    .sidenote-ref::before {
-      content: counter(sidenote);
-    }
-
-    .dinkus {
-      font-family: 'Cormorant Garamond', var(--serif);
-      text-align: center;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: 0.25em;
-      color: var(--sepia-dark);
       margin: 0;
-      padding: 20px 0 30px;
     }
 
-    @media (max-width: 1800px) {
-      .layout-grid {
-        grid-template-columns: 1fr;
-        padding: 0 24px 100px;
-      }
-
-      .toc {
-        display: none;
-      }
-
-      .main-area {
-        grid-column: 1;
-        max-width: 660px;
-        margin: 0 auto;
-      }
-
-      .article-header,
-      .article-body p,
-      .article-body ul {
-        max-width: 660px;
-      }
-
-      .sidenote {
-        float: none;
-        width: 100%;
-        margin: 0 0 24px;
-        padding-left: 16px;
-        border-left: 2px solid var(--rule);
+    @media (max-width: 860px) {
+      .library-grid {
+        padding: 90px 24px 100px;
       }
     }
   </style>
 </head>
 <body>
   <div class="brand">
-    <a class="site-title" href="index.html">Global Maxima</a>
     <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
+    <a class="site-title" href="index.html">Global Maxima</a>
   </div>
 
   <div class="top-right-group">
-    <nav class="top-menu" aria-label="Primary">
-      <a href="library.html">Library</a>
-    </nav>
-
     <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
         <circle cx="12" cy="12" r="4.5"/>
@@ -544,64 +345,17 @@
   </button>
 
   <div class="page">
-    <header class="site-header"></header>
-
-    <div class="layout-grid">
-      <nav class="toc" aria-label="Contents">
-        <p class="toc-label">The Two Subcultures</p>
-        <ol>
-          <li><a href="#sec-intro">Introduction</a></li>
-          <li><a href="#sec-subcultures">The two subcultures</a></li>
-          <li><a href="#sec-divergence">Convergence &amp; divergence</a></li>
-          <li><a href="#sec-ahead">What follows</a></li>
-        </ol>
-      </nav>
-
-      <main class="main-area">
-        <article>
-          <div class="article-header">
-            <h1 class="article-title">The Two Subcultures</h1>
-            <p class="article-subtitle">Synthesis at the intellectual frontier</p>
-            <p class="article-byline">Max Ramsahoye</p>
-          </div>
-
-          <div class="article-body">
-            <section id="sec-intro">
-              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959)<sup class="sidenote-ref"></sup> is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
-
-              <aside class="sidenote"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
-
-              <p>Any cursory observation of technological acceleration and its consequences &ndash; from crossing planetary boundaries to advancing AI &ndash; will show that this problem has persisted well into the 21st century, with the sciences (means or instrumentality) taking precedent over the humanities (ends or values).</p>
-            </section>
-
-            <section id="sec-subcultures">
-              <p>When contemplating this frame, I have come to see a similar great divide arising at the frontier of contemporary theory outside of academia. I find myself positioned between two subcultures (or rather clusters of subcultures):</p>
-
-              <ul class="dash-list">
-                <li>&mdash;&nbsp;<strong>The PARA-academic space:</strong> encompassing progress studies, AI alignment, rationalism and effective altruism (also existential risk studies).</li>
-                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..<sup class="sidenote-ref"></sup></li>
-              </ul>
-
-              <aside class="sidenote"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
-            </section>
-
-            <section id="sec-divergence">
-              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement<sup class="sidenote-ref"></sup> &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
-
-              <aside class="sidenote"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
-
-              <p>To the extent that there are those within each subculture that are aware of the other, there is little explicit mention or constructive interaction between the two; despite significant overlap in areas of interest and more interestingly, critical points of divergence.</p>
-            </section>
-
-            <section id="sec-ahead">
-              <p>As well as providing new conceptual handles for talking about this matter, in this article I&rsquo;ll also briefly set out some of the affinities and antagonisms I see between the two subcultures.</p>
-            </section>
-          </div>
-        </article>
-      </main>
+    <div class="library-grid">
+      <ul class="article-list">
+        <li class="article-entry">
+          <a class="article-entry-link" href="the-two-subcultures.html">
+            <h2 class="article-entry-title">The Two Subcultures</h2>
+            <p class="article-entry-subtitle">Synthesis at the intellectual frontier</p>
+            <p class="article-entry-desc">An exploration of the divide between the PARA-academic and Meta- intellectual subcultures at the frontier of contemporary theory &mdash; and a case for the synthesis neither has yet attempted.</p>
+          </a>
+        </li>
+      </ul>
     </div>
-
-    <p class="dinkus">***</p>
   </div>
 
   <script>
@@ -609,7 +363,7 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 154;
+      var CANVAS_TOP = 304;
 
       function update() {
         var doc = document.documentElement;

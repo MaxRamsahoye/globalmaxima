@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <title>The Two Subcultures — Global Maxima</title>
+  <link rel="icon" href="favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon/favicon-192.png">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'ET Bembo';
+      src: url('fonts/ETBembo-RomanOSF.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ET Bembo';
+      src: url('fonts/ETBembo-SemiBoldOSF.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ET Bembo';
+      src: url('fonts/ETBembo-DisplayItalic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ET Bembo Lining';
+      src: url('fonts/ETBembo-RomanLF.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --sepia-frame: #e6d6b8;
+      --sepia: #a98a5c;
+      --sepia-dark: #8a6d42;
+      --cream: #f8f4ee;
+      --ink: #000000;
+      --ink-soft: #000000;
+      --rule: #e4ddd3;
+      --track-tint: rgba(0, 0, 0, 0.08);
+      --frame-margin: 100px;
+      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    body.wide {
+      --frame-margin: 0px;
+    }
+
+    html[data-theme="dark"] {
+      --sepia-frame: #0d1330;
+      --sepia: #2c3760;
+      --sepia-dark: #9fb0d9;
+      --cream: #000000;
+      --ink: #ffffff;
+      --ink-soft: #ffffff;
+      --rule: #232c4c;
+      --track-tint: rgba(255, 255, 255, 0.15);
+    }
+
+    .page {
+      transition: background-color 0.25s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--sepia-frame);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      position: relative;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--sepia-frame);
+      padding: 150px var(--frame-margin) 0;
+      font-family: var(--serif);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease;
+    }
+
+    .page {
+      background: var(--cream);
+      border-radius: 14px 14px 0 0;
+      min-height: calc(100vh - 150px);
+    }
+
+    .brand {
+      position: absolute;
+      top: 42px;
+      left: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .site-title {
+      font-family: var(--serif);
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .site-title:hover {
+      color: var(--sepia-dark);
+    }
+
+    .site-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--sepia-dark);
+      white-space: nowrap;
+    }
+
+    .top-right-group {
+      position: absolute;
+      top: 50px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      min-height: 36px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .theme-toggle:hover {
+      color: var(--sepia-dark);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-moon {
+      display: block;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 24px;
+    }
+
+    .top-menu a {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .top-menu a:hover {
+      border-bottom-color: var(--ink);
+    }
+
+    html {
+      scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-progress-track {
+      position: fixed;
+      top: 154px;
+      right: var(--frame-margin);
+      width: 12px;
+      height: calc(100vh - 154px);
+      border-radius: 0;
+      background: var(--track-tint);
+      z-index: 40;
+      opacity: 0;
+      transition: right 0.6s ease, opacity 0.3s ease;
+    }
+
+    .scroll-progress-fill {
+      position: fixed;
+      top: 154px;
+      right: var(--frame-margin);
+      width: 12px;
+      height: 0px;
+      border-radius: 0;
+      background: var(--sepia-dark);
+      z-index: 41;
+      opacity: 0;
+      transition: right 0.6s ease, opacity 0.3s ease;
+    }
+
+    body.past-frame .scroll-progress-track,
+    body.past-frame .scroll-progress-fill {
+      opacity: 1;
+    }
+
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 30px;
+      right: calc(var(--frame-margin) + 40px);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, right 0.6s ease;
+      z-index: 42;
+      color: var(--sepia-dark);
+    }
+
+    .scroll-top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scroll-top-btn:hover {
+      color: var(--ink);
+    }
+
+    .scroll-top-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 760px) 300px;
+      column-gap: 90px;
+      align-items: start;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0 0 40px;
+    }
+
+    .toc {
+      grid-column: 1;
+      position: sticky;
+      top: 504px;
+      transform: translateX(-40px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    body.wide .toc {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 0.4s ease 0.6s;
+    }
+
+    .toc-label {
+      font-family: var(--serif);
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      font-weight: 600;
+      color: var(--sepia-dark);
+      margin: 0 0 16px;
+    }
+
+    .toc ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: toc-counter;
+    }
+
+    .toc li {
+      counter-increment: toc-counter;
+      margin-bottom: 14px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .toc li::before {
+      content: counter(toc-counter) '. ';
+      color: var(--sepia-dark);
+    }
+
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .toc a:hover {
+      border-bottom-color: var(--ink);
+    }
+
+    .main-area {
+      grid-column: 2;
+    }
+
+    .article-header {
+      max-width: 760px;
+      margin: 0;
+      padding: 130px 0 0;
+      text-align: left;
+    }
+
+    .article-title {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 58px;
+      line-height: 1.15;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+
+    .article-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 26px;
+      color: var(--ink);
+      margin: 0 0 26px;
+    }
+
+    .article-byline {
+      font-family: var(--serif);
+      font-size: 17px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin: 0 0 72px;
+    }
+
+    .article-body {
+      font-size: 23px;
+      line-height: 1.3;
+      color: var(--ink);
+      counter-reset: sidenote;
+    }
+
+    .article-body::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    .article-body p,
+    .article-body ul {
+      max-width: 760px;
+    }
+
+    .article-body p {
+      margin: 10px 0;
+    }
+
+    .article-body ul {
+      margin: 15px 0;
+    }
+
+    .dash-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .dash-list li {
+      padding-left: 1.3em;
+      text-indent: -1.3em;
+      margin-bottom: 18px;
+    }
+
+    .dash-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidenote {
+      float: right;
+      clear: right;
+      width: 300px;
+      margin: 4px -420px 20px 0;
+      font-family: var(--serif);
+      font-style: normal;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    body.wide .sidenote {
+      opacity: 1;
+      transition: opacity 0.4s ease 0.6s;
+    }
+
+    .sidenote-label {
+      display: block;
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sepia-dark);
+      margin-bottom: 4px;
+    }
+
+    .sidenote-label::before {
+      content: counter(sidenote) '.';
+    }
+
+    .sidenote-ref {
+      counter-increment: sidenote;
+      font-size: 0.65em;
+      color: var(--sepia-dark);
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .sidenote-ref::before {
+      content: counter(sidenote);
+    }
+
+    .dinkus {
+      font-family: 'Cormorant Garamond', var(--serif);
+      text-align: center;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.25em;
+      color: var(--sepia-dark);
+      margin: 0;
+      padding: 20px 0 30px;
+    }
+
+    @media (max-width: 1800px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+        padding: 0 24px 100px;
+      }
+
+      .toc {
+        display: none;
+      }
+
+      .main-area {
+        grid-column: 1;
+        max-width: 660px;
+        margin: 0 auto;
+      }
+
+      .article-header,
+      .article-body p,
+      .article-body ul {
+        max-width: 660px;
+      }
+
+      .sidenote {
+        float: none;
+        width: 100%;
+        margin: 0 0 24px;
+        padding-left: 16px;
+        border-left: 2px solid var(--rule);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand">
+    <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
+    <a class="site-title" href="index.html">Global Maxima</a>
+  </div>
+
+  <div class="top-right-group">
+    <nav class="top-menu" aria-label="Primary">
+      <a href="index.html">Library</a>
+    </nav>
+
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="5" y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
+        <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
+        <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
+        <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="scroll-progress-track"></div>
+  <div class="scroll-progress-fill"></div>
+
+  <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
+      <polygon points="3,23 13,16.5 23,23 13,3"/>
+      <line x1="13" y1="16.5" x2="13" y2="3"/>
+    </svg>
+  </button>
+
+  <div class="page">
+    <header class="site-header"></header>
+
+    <div class="layout-grid">
+      <nav class="toc" aria-label="Contents">
+        <p class="toc-label">The Two Subcultures</p>
+        <ol>
+          <li><a href="#sec-intro">Introduction</a></li>
+          <li><a href="#sec-subcultures">The two subcultures</a></li>
+          <li><a href="#sec-divergence">Convergence &amp; divergence</a></li>
+          <li><a href="#sec-ahead">What follows</a></li>
+        </ol>
+      </nav>
+
+      <main class="main-area">
+        <article>
+          <div class="article-header">
+            <h1 class="article-title">The Two Subcultures</h1>
+            <p class="article-subtitle">Synthesis at the intellectual frontier</p>
+            <p class="article-byline">Max Ramsahoye</p>
+          </div>
+
+          <div class="article-body">
+            <section id="sec-intro">
+              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959)<sup class="sidenote-ref"></sup> is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
+
+              <aside class="sidenote"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
+
+              <p>Any cursory observation of technological acceleration and its consequences &ndash; from crossing planetary boundaries to advancing AI &ndash; will show that this problem has persisted well into the 21st century, with the sciences (means or instrumentality) taking precedent over the humanities (ends or values).</p>
+            </section>
+
+            <section id="sec-subcultures">
+              <p>When contemplating this frame, I have come to see a similar great divide arising at the frontier of contemporary theory outside of academia. I find myself positioned between two subcultures (or rather clusters of subcultures):</p>
+
+              <ul class="dash-list">
+                <li>&mdash;&nbsp;<strong>The PARA-academic space:</strong> encompassing progress studies, AI alignment, rationalism and effective altruism (also existential risk studies).</li>
+                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..<sup class="sidenote-ref"></sup></li>
+              </ul>
+
+              <aside class="sidenote"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
+            </section>
+
+            <section id="sec-divergence">
+              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement<sup class="sidenote-ref"></sup> &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
+
+              <aside class="sidenote"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
+
+              <p>To the extent that there are those within each subculture that are aware of the other, there is little explicit mention or constructive interaction between the two; despite significant overlap in areas of interest and more interestingly, critical points of divergence.</p>
+            </section>
+
+            <section id="sec-ahead">
+              <p>As well as providing new conceptual handles for talking about this matter, in this article I&rsquo;ll also briefly set out some of the affinities and antagonisms I see between the two subcultures.</p>
+            </section>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <p class="dinkus">***</p>
+  </div>
+
+  <script>
+    (function () {
+      var track = document.querySelector('.scroll-progress-track');
+      var fill = document.querySelector('.scroll-progress-fill');
+      var btn = document.querySelector('.scroll-top-btn');
+      var CANVAS_TOP = 154;
+
+      function update() {
+        var doc = document.documentElement;
+        var scrollTop = doc.scrollTop || document.body.scrollTop;
+        var scrollable = doc.scrollHeight - doc.clientHeight;
+        var canvasScrollable = scrollable - CANVAS_TOP;
+        var pct = canvasScrollable > 0 ? Math.min(100, Math.max(0, ((scrollTop - CANVAS_TOP) / canvasScrollable) * 100)) : 0;
+
+        var topInset = Math.max(0, CANVAS_TOP - scrollTop);
+        var trackHeight = window.innerHeight - topInset;
+
+        track.style.top = topInset + 'px';
+        track.style.height = trackHeight + 'px';
+        fill.style.top = topInset + 'px';
+        fill.style.height = (pct / 100 * trackHeight) + 'px';
+
+        btn.classList.toggle('visible', pct > 20);
+        document.body.classList.toggle('wide', scrollTop > 10);
+        document.body.classList.toggle('past-frame', scrollTop > CANVAS_TOP);
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      var themeToggle = document.querySelector('.theme-toggle');
+      var root = document.documentElement;
+
+      function toggleTheme() {
+        var isDark = root.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          root.removeAttribute('data-theme');
+          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+        } else {
+          root.setAttribute('data-theme', 'dark');
+          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+        }
+      }
+
+      themeToggle.addEventListener('click', toggleTheme);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 't' && e.key !== 'T') return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        var tag = document.activeElement && document.activeElement.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement && document.activeElement.isContentEditable)) return;
+        toggleTheme();
+      });
+    })();
+  </script>
+</body>
+</html>
