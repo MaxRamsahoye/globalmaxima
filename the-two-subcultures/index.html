@@ -475,10 +475,61 @@
       color: var(--sepia-dark);
       vertical-align: super;
       line-height: 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .sidenote-ref:hover {
+      color: var(--ink);
     }
 
     .sidenote-ref::before {
       content: counter(sidenote);
+    }
+
+    .sidenote-label[data-num]::before {
+      content: attr(data-num) '.';
+    }
+
+    .sidenote-back {
+      font-size: 0.85em;
+      color: var(--sepia-dark);
+      text-decoration: none;
+      margin-left: 4px;
+    }
+
+    .sidenote-back:hover {
+      color: var(--ink);
+    }
+
+    .endnotes {
+      display: none;
+    }
+
+    .endnotes.has-notes {
+      display: block;
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .endnotes-heading {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--ink);
+      margin: 0 0 16px;
+    }
+
+    .endnotes .sidenote {
+      border-left: none;
+      padding-left: 0;
+      margin: 0 0 16px;
+    }
+
+    .endnotes .sidenote:last-child {
+      margin-bottom: 0;
     }
 
     .dinkus {
@@ -707,9 +758,9 @@
 
           <div class="article-body">
             <section id="sec-intro">
-              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959)<sup class="sidenote-ref"></sup> is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
+              <p>Within recent intellectual history, C.P. Snow&rsquo;s <em>The Two Cultures</em> (1959)<a class="sidenote-ref" id="ref-1" href="#note-1"></a> is considered a classic: representing an incisive intervention against a (Western) civilisation that had failed to properly integrate the sciences and the humanities, much to its detriment.</p>
 
-              <aside class="sidenote"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes.</aside>
+              <aside class="sidenote" id="note-1"><span class="sidenote-label"></span>Snow delivered this argument as the 1959 Rede Lecture at Cambridge; the ensuing controversy became one of the century&rsquo;s defining intellectual disputes. <a class="sidenote-back" href="#ref-1">&#8617;</a></aside>
 
               <p>Any cursory observation of technological acceleration and its consequences &ndash; from crossing planetary boundaries to advancing AI &ndash; will show that this problem has persisted well into the 21st century, with the sciences (means or instrumentality) taking precedent over the humanities (ends or values).</p>
             </section>
@@ -719,16 +770,16 @@
 
               <ul class="dash-list">
                 <li>&mdash;&nbsp;<strong>The PARA-academic space:</strong> encompassing progress studies, AI alignment, rationalism and effective altruism (also existential risk studies).</li>
-                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..<sup class="sidenote-ref"></sup></li>
+                <li>&mdash;&nbsp;<strong>The Meta-space:</strong> oriented around the metacrisis, metamodernism and metatheory (also metarationality, metanarrative, metaphysics, metasystem, metacognition). Basically, if it has a meta- prefix it sounds cool and it counts..<a class="sidenote-ref" id="ref-2" href="#note-2"></a></li>
               </ul>
 
-              <aside class="sidenote"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse.</aside>
+              <aside class="sidenote" id="note-2"><span class="sidenote-label"></span>The proliferation of meta&ndash;prefixed terms is itself a symptom of the underlying phenomenon: a felt need to theorise about theorising, a level up from any single first-order discourse. <a class="sidenote-back" href="#ref-2">&#8617;</a></aside>
             </section>
 
             <section id="sec-divergence">
-              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement<sup class="sidenote-ref"></sup> &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
+              <p>Some within my intellectual circles &mdash; such as the emerging Integral Altruism movement<a class="sidenote-ref" id="ref-3" href="#note-3"></a> &mdash; are aware of these two subcultures, though many further afield are not, despite their (arguably world-historical) significance. Further, my overall impression &mdash; and a premise of my writings here &mdash; is that these spaces have not sufficiently engaged with each other.</p>
 
-              <aside class="sidenote"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward.</aside>
+              <aside class="sidenote" id="note-3"><span class="sidenote-label"></span>A small network of thinkers attempting to explicitly bridge rationalist and metamodern sensibilities &mdash; one of the few extant efforts at the synthesis this essay gestures toward. <a class="sidenote-back" href="#ref-3">&#8617;</a></aside>
 
               <p>To the extent that there are those within each subculture that are aware of the other, there is little explicit mention or constructive interaction between the two; despite significant overlap in areas of interest and more interestingly, critical points of divergence.</p>
             </section>
@@ -739,6 +790,10 @@
           </div>
         </article>
       </main>
+    </div>
+
+    <div class="endnotes" id="endnotes">
+      <p class="endnotes-heading">Notes</p>
     </div>
 
     <p class="dinkus">***</p>
@@ -770,6 +825,41 @@
         setTimeout(function () {
           location.href = link.href;
         }, 350);
+      });
+
+      var endnotesContainer = document.getElementById('endnotes');
+      var sidenotes = Array.prototype.slice.call(document.querySelectorAll('.sidenote'));
+      var sidenoteHomes = sidenotes.map(function (el) {
+        return { el: el, parent: el.parentNode, next: el.nextSibling };
+      });
+
+      sidenotes.forEach(function (el, i) {
+        var label = el.querySelector('.sidenote-label');
+        if (label) label.setAttribute('data-num', i + 1);
+      });
+
+      var endnotesQuery = window.matchMedia('(max-width: 960px)');
+      var notesAreEndnotes = null;
+
+      function setEndnotesMode(isEndnotes) {
+        if (isEndnotes === notesAreEndnotes) return;
+        notesAreEndnotes = isEndnotes;
+        if (isEndnotes) {
+          sidenoteHomes.forEach(function (home) {
+            endnotesContainer.appendChild(home.el);
+          });
+          endnotesContainer.classList.add('has-notes');
+        } else {
+          sidenoteHomes.forEach(function (home) {
+            home.parent.insertBefore(home.el, home.next);
+          });
+          endnotesContainer.classList.remove('has-notes');
+        }
+      }
+
+      setEndnotesMode(endnotesQuery.matches);
+      endnotesQuery.addEventListener('change', function (e) {
+        setEndnotesMode(e.matches);
       });
 
       var track = document.querySelector('.scroll-progress-track');
