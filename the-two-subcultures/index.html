@@ -107,7 +107,12 @@
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
-      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease;
+      opacity: 0;
+      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease, opacity 0.3s ease;
+    }
+
+    body.page-visible {
+      opacity: 1;
     }
 
     .page {
@@ -611,6 +616,32 @@
 
   <script>
     (function () {
+      requestAnimationFrame(function () {
+        document.body.classList.add('page-visible');
+      });
+
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          document.body.classList.add('page-visible');
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var link = e.target.closest('a');
+        if (!link || (link.target && link.target !== '_self')) return;
+        var url;
+        try { url = new URL(link.href, location.href); } catch (err) { return; }
+        if (url.origin !== location.origin) return;
+        if (url.pathname === location.pathname && url.hash) return;
+        e.preventDefault();
+        document.body.classList.remove('page-visible');
+        setTimeout(function () {
+          location.href = link.href;
+        }, 300);
+      });
+
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
