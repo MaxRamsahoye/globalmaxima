@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link id="favicon-ico" rel="icon" href="../favicon/favicon-light.ico" sizes="any">
+  <link id="favicon-32" rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32-light.png">
+  <link id="favicon-192" rel="icon" type="image/png" sizes="192x192" href="../favicon/favicon-192-light.png">
+  <link id="favicon-apple" rel="apple-touch-icon" href="../favicon/apple-touch-icon-light.png">
   <script>
     (function () {
       try {
         if (localStorage.getItem('theme') === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
+          document.getElementById('favicon-ico').href = '../favicon/favicon-dark.ico';
+          document.getElementById('favicon-32').href = '../favicon/favicon-32-dark.png';
+          document.getElementById('favicon-192').href = '../favicon/favicon-192-dark.png';
+          document.getElementById('favicon-apple').href = '../favicon/apple-touch-icon-dark.png';
         }
       } catch (e) {}
     })();
   </script>
   <title>The Two Subcultures — Global Maxima</title>
-  <link rel="icon" href="../favicon/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="../favicon/favicon-192.png">
-  <link rel="apple-touch-icon" href="../favicon/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
@@ -99,7 +103,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 150px var(--frame-margin) 0;
+      padding: 175px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -109,17 +113,17 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 150px);
+      min-height: calc(100vh - 175px);
     }
 
     .brand {
       position: absolute;
-      top: 42px;
-      left: 40px;
+      top: 50px;
+      left: var(--frame-margin);
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
+      align-items: baseline;
+      gap: 34px;
+      transition: left 0.6s ease;
     }
 
     .site-title {
@@ -213,10 +217,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 154px;
+      top: 179px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 154px);
+      height: calc(100vh - 179px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -226,7 +230,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 154px;
+      top: 179px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -289,7 +293,7 @@
     .toc {
       grid-column: 1;
       position: sticky;
-      top: 504px;
+      top: 529px;
       transform: translateX(-40px);
       opacity: 0;
       pointer-events: none;
@@ -507,8 +511,8 @@
 </head>
 <body>
   <div class="brand">
-    <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
     <a class="site-title" href="../">Global Maxima</a>
+    <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
   </div>
 
   <div class="top-right-group">
@@ -610,7 +614,7 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 154;
+      var CANVAS_TOP = 179;
 
       function update() {
         var doc = document.documentElement;
@@ -643,14 +647,24 @@
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
 
+      function setFavicons(isDark) {
+        var suffix = isDark ? 'dark' : 'light';
+        document.getElementById('favicon-ico').href = '../favicon/favicon-' + suffix + '.ico';
+        document.getElementById('favicon-32').href = '../favicon/favicon-32-' + suffix + '.png';
+        document.getElementById('favicon-192').href = '../favicon/favicon-192-' + suffix + '.png';
+        document.getElementById('favicon-apple').href = '../favicon/apple-touch-icon-' + suffix + '.png';
+      }
+
       function toggleTheme() {
         var isDark = root.getAttribute('data-theme') === 'dark';
         if (isDark) {
           root.removeAttribute('data-theme');
           try { localStorage.setItem('theme', 'light'); } catch (e) {}
+          setFavicons(false);
         } else {
           root.setAttribute('data-theme', 'dark');
           try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+          setFavicons(true);
         }
       }
 
