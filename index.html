@@ -58,7 +58,7 @@
       --ink-soft: #000000;
       --rule: #e4ddd3;
       --track-tint: rgba(0, 0, 0, 0.08);
-      --frame-margin: 300px;
+      --frame-margin: 430px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
@@ -92,7 +92,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 300px var(--frame-margin) 0;
+      padding: 430px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 300px);
+      min-height: calc(100vh - 430px);
       transition: background-color 0.25s ease;
     }
 
@@ -116,11 +116,10 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 300px;
+      padding: 72px 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 18px;
       text-align: center;
     }
@@ -145,6 +144,23 @@
       font-size: 21px;
       color: var(--sepia-dark);
       white-space: nowrap;
+    }
+
+    .site-author {
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .site-description {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+      max-width: 560px;
+      margin: 0;
     }
 
     .top-right-group {
@@ -191,10 +207,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 304px;
+      top: 434px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 304px);
+      height: calc(100vh - 434px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -204,7 +220,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 304px;
+      top: 434px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -337,6 +353,8 @@
   <div class="brand">
     <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
     <a class="site-title" href="./">Global Maxima</a>
+    <p class="site-author">Max Ramsahoye</p>
+    <p class="site-description">A collection of writings on civilisation, AI and the metacrisis &mdash; exploring the divide between rationalist and metamodern modes of thought, and gesturing toward what a genuine synthesis between them might look like at the intellectual frontier.</p>
   </div>
 
   <div class="top-right-group">
@@ -415,7 +433,7 @@
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
-      var CANVAS_TOP = 304;
+      var CANVAS_TOP = 434;
 
       function update() {
         var doc = document.documentElement;
