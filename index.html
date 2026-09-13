@@ -97,7 +97,7 @@
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
-      transition: background-color 0.25s ease, opacity 0.7s ease-in-out;
+      transition: background-color 0.25s ease, opacity 0.35s ease-in-out;
     }
 
     body.page-visible {
@@ -149,19 +149,8 @@
     .site-description {
       font-family: var(--serif);
       font-size: 18px;
-      line-height: 1.5;
       color: var(--ink);
-      max-width: 560px;
-      margin: 0;
-    }
-
-    .site-definition {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 17px;
-      line-height: 1.6;
-      color: var(--sepia-dark);
-      max-width: 560px;
+      white-space: nowrap;
       margin: 0;
     }
 
@@ -356,7 +345,6 @@
     <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
     <a class="site-title" href="./">Global Maxima</a>
     <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by Max Ramsahoye.</p>
-    <p class="site-definition">The global maximum is the upper limit of an entire domain. Unlike a local maximum, which is simply a peak higher than the points immediately surrounding it, a global maximum represents the single highest place attainable.</p>
   </div>
 
   <div class="top-right-group">
@@ -429,7 +417,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 700);
+        }, 350);
       });
 
       var track = document.querySelector('.scroll-progress-track');

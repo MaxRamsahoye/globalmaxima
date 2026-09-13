@@ -108,7 +108,7 @@
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
-      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease, opacity 0.7s ease-in-out;
+      transition: background-color 0.25s ease, padding-left 0.6s ease, padding-right 0.6s ease, opacity 0.35s ease-in-out;
     }
 
     body.page-visible {
@@ -639,7 +639,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 700);
+        }, 350);
       });
 
       var track = document.querySelector('.scroll-progress-track');
