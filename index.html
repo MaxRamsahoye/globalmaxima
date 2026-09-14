@@ -92,7 +92,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 310px var(--frame-margin) 0;
+      padding: 100vh var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -107,7 +107,6 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 310px);
       transition: background-color 0.25s ease;
     }
 
@@ -116,9 +115,11 @@
       top: 0;
       left: 0;
       right: 0;
-      padding: 72px 40px;
+      height: 100vh;
+      padding: 0 56px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
       gap: 18px;
       text-align: center;
@@ -338,18 +339,6 @@
         --frame-margin: 0px;
       }
 
-      body {
-        padding-top: 220px;
-      }
-
-      .page {
-        min-height: calc(100vh - 220px);
-      }
-
-      .brand {
-        padding: 48px 56px 32px;
-      }
-
       .site-title {
         font-size: 38px;
       }
@@ -367,21 +356,12 @@
     }
 
     @media (max-width: 640px) {
-      body {
-        padding-top: 190px;
-      }
-
-      .page {
-        min-height: calc(100vh - 190px);
-      }
-
       .top-right-group {
         top: 24px;
         right: 24px;
       }
 
       .brand {
-        padding: 56px 56px 24px;
         gap: 12px;
       }
 
