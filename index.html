@@ -127,7 +127,7 @@
 
     .site-title {
       font-family: var(--serif);
-      font-size: 60px;
+      font-size: 80px;
       letter-spacing: -0.02em;
       color: var(--ink);
       text-decoration: none;
@@ -142,14 +142,14 @@
     .site-quote {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 26px;
+      font-size: 33px;
       color: var(--sepia-dark);
       white-space: nowrap;
     }
 
     .site-description {
       font-family: var(--serif);
-      font-size: 22px;
+      font-size: 27px;
       color: var(--ink);
       white-space: nowrap;
       margin: 0;
@@ -264,7 +264,7 @@
 
     .scroll-down-btn {
       position: absolute;
-      top: calc(100vh - 70px);
+      top: calc(100vh - 130px);
       left: 50%;
       transform: translateX(-50%);
       width: 34px;
@@ -276,13 +276,13 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      color: var(--sepia-dark);
+      color: #ffffff;
       z-index: 5;
       animation: scroll-down-bounce 2s ease-in-out infinite;
     }
 
     .scroll-down-btn:hover {
-      color: var(--ink);
+      color: var(--sepia-dark);
     }
 
     .scroll-down-btn svg {
@@ -372,18 +372,18 @@
       padding: 20px 0 30px;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 1000px) {
       :root {
         --frame-margin: 0px;
       }
 
       .site-title {
-        font-size: 46px;
+        font-size: 60px;
       }
 
       .site-quote,
       .site-description {
-        font-size: 21px;
+        font-size: 26px;
         white-space: normal;
         max-width: 100%;
       }
@@ -404,12 +404,12 @@
       }
 
       .site-title {
-        font-size: 36px;
+        font-size: 44px;
       }
 
       .site-quote,
       .site-description {
-        font-size: 18px;
+        font-size: 20px;
         white-space: normal;
         max-width: 100%;
       }
