@@ -58,7 +58,7 @@
       --ink-soft: #000000;
       --rule: #e4ddd3;
       --track-tint: rgba(0, 0, 0, 0.08);
-      --frame-margin: 80px;
+      --frame-margin: 100px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
@@ -92,7 +92,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 290px var(--frame-margin) 0;
+      padding: 230px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 290px);
+      min-height: calc(100vh - 230px);
       display: flex;
       flex-direction: column;
       transition: background-color 0.25s ease;
@@ -118,7 +118,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 290px;
+      height: 230px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -204,10 +204,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 294px;
+      top: 234px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 294px);
+      height: calc(100vh - 234px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -217,7 +217,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 294px;
+      top: 234px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -350,25 +350,25 @@
       }
 
       body {
-        padding-top: 240px;
+        padding-top: 200px;
       }
 
       .page {
-        min-height: calc(100vh - 240px);
+        min-height: calc(100vh - 200px);
       }
 
       .frame-header {
-        height: 240px;
+        height: 200px;
         padding-right: 24px;
       }
 
       .scroll-progress-track,
       .scroll-progress-fill {
-        top: 244px;
+        top: 204px;
       }
 
       .scroll-progress-track {
-        height: calc(100vh - 244px);
+        height: calc(100vh - 204px);
       }
 
       .site-title {
