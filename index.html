@@ -92,7 +92,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--sepia-frame);
-      padding: 230px var(--frame-margin) 0;
+      padding: 290px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@
     .page {
       background: var(--cream);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 230px);
+      min-height: calc(100vh - 290px);
       transition: background-color 0.25s ease;
     }
 
@@ -116,7 +116,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 230px;
+      height: 290px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -149,6 +149,15 @@
       font-style: italic;
       font-size: 18px;
       color: var(--sepia-dark);
+    }
+
+    .site-description {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--ink);
+      max-width: 480px;
+      margin: 0;
     }
 
     .top-right-group {
@@ -193,10 +202,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 234px;
+      top: 294px;
       right: var(--frame-margin);
       width: 12px;
-      height: calc(100vh - 234px);
+      height: calc(100vh - 294px);
       border-radius: 0;
       background: var(--track-tint);
       z-index: 40;
@@ -206,7 +215,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 234px;
+      top: 294px;
       right: var(--frame-margin);
       width: 12px;
       height: 0px;
@@ -262,21 +271,10 @@
       padding: 70px 40px 100px;
     }
 
-    .library-intro {
-      font-family: var(--serif);
-      font-size: 20px;
-      line-height: 1.5;
-      color: var(--ink);
-      max-width: 640px;
-      margin: 0 0 60px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid var(--rule);
-    }
-
     .article-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .article-card {
@@ -284,41 +282,42 @@
       flex-direction: column;
       text-decoration: none;
       color: inherit;
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      padding: 32px;
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      width: 100%;
+      max-width: 860px;
+      text-align: center;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 64px 16px;
+      transition: border-color 0.2s ease;
     }
 
     .article-card:hover {
       border-color: var(--sepia-dark);
-      transform: translateY(-2px);
     }
 
     .card-title {
       font-family: var(--serif);
       font-weight: 600;
-      font-size: 28px;
+      font-size: 34px;
       line-height: 1.15;
       color: var(--ink);
-      margin: 0 0 6px;
+      margin: 0 0 8px;
     }
 
     .card-subtitle {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 17px;
+      font-size: 19px;
       color: var(--sepia-dark);
-      margin: 0 0 16px;
+      margin: 0 0 24px;
     }
 
     .card-desc {
       font-family: var(--serif);
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.5;
       color: var(--ink);
-      margin: 0 0 20px;
-      flex-grow: 1;
+      margin: 0 0 28px;
     }
 
     .card-read {
@@ -350,43 +349,41 @@
       }
 
       body {
-        padding-top: 190px;
+        padding-top: 240px;
       }
 
       .page {
-        min-height: calc(100vh - 190px);
+        min-height: calc(100vh - 240px);
       }
 
       .frame-header {
-        height: 190px;
+        height: 240px;
         padding-right: 24px;
       }
 
       .scroll-progress-track,
       .scroll-progress-fill {
-        top: 194px;
+        top: 244px;
       }
 
       .scroll-progress-track {
-        height: calc(100vh - 194px);
+        height: calc(100vh - 244px);
       }
 
       .site-title {
         font-size: 36px;
       }
 
+      .site-description {
+        max-width: 320px;
+      }
+
       .library-grid {
         padding: 50px 24px 80px;
       }
 
-      .library-intro {
-        margin-bottom: 44px;
-        padding-bottom: 28px;
-      }
-
-      .article-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+      .article-card {
+        padding: 48px 8px;
       }
     }
 
@@ -421,6 +418,7 @@
     <div class="brand">
       <a class="site-title" href="./">Global Maxima</a>
       <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
+      <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by Max Ramsahoye.</p>
     </div>
 
     <div class="top-right-group">
@@ -455,8 +453,6 @@
 
   <div class="page">
     <div class="library-grid">
-      <p class="library-intro">A collection of writings on civilisation, AI and the metacrisis by Max Ramsahoye.</p>
-
       <div class="article-grid">
         <a class="article-card" href="the-two-subcultures/">
           <h2 class="card-title">The Two Subcultures</h2>
