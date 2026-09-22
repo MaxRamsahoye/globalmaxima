@@ -10,12 +10,14 @@
   <script>
     (function () {
       try {
-        if (localStorage.getItem('theme') === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          document.getElementById('favicon-ico').href = 'favicon/favicon-dark.ico';
-          document.getElementById('favicon-32').href = 'favicon/favicon-32-dark.png';
-          document.getElementById('favicon-192').href = 'favicon/favicon-192-dark.png';
-          document.getElementById('favicon-apple').href = 'favicon/apple-touch-icon-dark.png';
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'mono-light' || t === 'mono-dark') {
+          document.documentElement.setAttribute('data-theme', t);
+          var suffix = (t === 'dark' || t === 'mono-dark') ? 'dark' : 'light';
+          document.getElementById('favicon-ico').href = 'favicon/favicon-' + suffix + '.ico';
+          document.getElementById('favicon-32').href = 'favicon/favicon-32-' + suffix + '.png';
+          document.getElementById('favicon-192').href = 'favicon/favicon-192-' + suffix + '.png';
+          document.getElementById('favicon-apple').href = 'favicon/apple-touch-icon-' + suffix + '.png';
         }
       } catch (e) {}
     })();
@@ -50,27 +52,45 @@
     }
 
     :root {
-      --sepia-frame: #e6d6b8;
-      --sepia: #a98a5c;
-      --sepia-dark: #8a6d42;
-      --cream: #f8f4ee;
-      --ink: #000000;
-      --ink-soft: #000000;
+      --frame-bg: #e6d6b8;
+      --frame-ink: #000000;
+      --frame-accent: #8a6d42;
+      --frame-track-tint: rgba(0, 0, 0, 0.08);
+      --canvas-bg: #f8f4ee;
+      --canvas-ink: #000000;
+      --canvas-accent: #8a6d42;
       --rule: #e4ddd3;
-      --track-tint: rgba(0, 0, 0, 0.08);
       --frame-margin: 100px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
     html[data-theme="dark"] {
-      --sepia-frame: #0d1330;
-      --sepia: #2c3760;
-      --sepia-dark: #9fb0d9;
-      --cream: #000000;
-      --ink: #ffffff;
-      --ink-soft: #ffffff;
+      --frame-bg: #0d1330;
+      --frame-ink: #ffffff;
+      --frame-accent: #9fb0d9;
+      --frame-track-tint: rgba(255, 255, 255, 0.15);
+      --canvas-bg: #000000;
+      --canvas-ink: #ffffff;
+      --canvas-accent: #9fb0d9;
       --rule: #232c4c;
-      --track-tint: rgba(255, 255, 255, 0.15);
+    }
+
+    html[data-theme="mono-light"] {
+      --frame-bg: #000000;
+      --frame-ink: #ffffff;
+      --frame-accent: #a3a3a3;
+      --frame-track-tint: rgba(255, 255, 255, 0.15);
+    }
+
+    html[data-theme="mono-dark"] {
+      --frame-bg: #ffffff;
+      --frame-ink: #000000;
+      --frame-accent: #4d4d4d;
+      --frame-track-tint: rgba(0, 0, 0, 0.08);
+      --canvas-bg: #000000;
+      --canvas-ink: #ffffff;
+      --canvas-accent: #9fb0d9;
+      --rule: #232c4c;
     }
 
     * {
@@ -78,7 +98,7 @@
     }
 
     html {
-      background: var(--sepia-frame);
+      background: var(--frame-bg);
       scroll-behavior: smooth;
       scrollbar-width: none;
     }
@@ -91,10 +111,10 @@
       position: relative;
       margin: 0;
       min-height: 100vh;
-      background: var(--sepia-frame);
+      background: var(--frame-bg);
       padding: 250px var(--frame-margin) 0;
       font-family: var(--serif);
-      color: var(--ink);
+      color: var(--frame-ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
       transition: background-color 0.25s ease, opacity 0.35s ease-in-out;
@@ -105,7 +125,7 @@
     }
 
     .page {
-      background: var(--cream);
+      background: var(--canvas-bg);
       border-radius: 14px 14px 0 0;
       min-height: calc(100vh - 250px);
       display: flex;
@@ -136,28 +156,28 @@
       font-family: var(--serif);
       font-size: 46px;
       letter-spacing: -0.02em;
-      color: var(--ink);
+      color: var(--frame-ink);
       text-decoration: none;
       font-weight: 600;
       white-space: nowrap;
     }
 
     .site-title:hover {
-      color: var(--sepia-dark);
+      color: var(--frame-accent);
     }
 
     .site-quote {
       font-family: var(--serif);
       font-style: italic;
       font-size: 18px;
-      color: var(--sepia-dark);
+      color: var(--frame-accent);
     }
 
     .site-description {
       font-family: var(--serif);
       font-size: 18px;
       line-height: 1.4;
-      color: var(--ink);
+      color: var(--frame-ink);
       white-space: nowrap;
       margin: 0;
     }
@@ -178,11 +198,11 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      color: var(--ink);
+      color: var(--frame-ink);
     }
 
     .theme-toggle:hover {
-      color: var(--sepia-dark);
+      color: var(--frame-accent);
     }
 
     .theme-toggle svg {
@@ -190,7 +210,8 @@
       height: 20px;
     }
 
-    .theme-toggle .icon-moon {
+    .theme-toggle .icon-moon,
+    .theme-toggle .icon-contrast {
       display: none;
     }
 
@@ -202,6 +223,20 @@
       display: block;
     }
 
+    html[data-theme="mono-light"] .theme-toggle .icon-sun,
+    html[data-theme="mono-dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="mono-light"] .theme-toggle .icon-contrast,
+    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+      display: block;
+    }
+
+    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+      transform: scaleX(-1);
+    }
+
     .scroll-progress-track {
       position: fixed;
       top: 254px;
@@ -209,7 +244,7 @@
       width: 12px;
       height: calc(100vh - 254px);
       border-radius: 0;
-      background: var(--track-tint);
+      background: var(--frame-track-tint);
       z-index: 40;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -222,7 +257,7 @@
       width: 12px;
       height: 0px;
       border-radius: 0;
-      background: var(--sepia-dark);
+      background: var(--frame-accent);
       z-index: 41;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -250,7 +285,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 42;
-      color: var(--sepia-dark);
+      color: var(--frame-accent);
     }
 
     .scroll-top-btn.visible {
@@ -259,7 +294,7 @@
     }
 
     .scroll-top-btn:hover {
-      color: var(--ink);
+      color: var(--frame-ink);
     }
 
     .scroll-top-btn svg {
@@ -293,7 +328,7 @@
     }
 
     .article-card:hover {
-      border-color: var(--sepia-dark);
+      border-color: var(--canvas-accent);
     }
 
     .card-title {
@@ -301,7 +336,7 @@
       font-weight: 600;
       font-size: 34px;
       line-height: 1.15;
-      color: var(--ink);
+      color: var(--canvas-ink);
       margin: 0 0 8px;
     }
 
@@ -309,7 +344,7 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: 19px;
-      color: var(--sepia-dark);
+      color: var(--canvas-accent);
       margin: 0 0 24px;
     }
 
@@ -317,7 +352,7 @@
       font-family: var(--serif);
       font-size: 18px;
       line-height: 1.5;
-      color: var(--ink);
+      color: var(--canvas-ink);
       margin: 0 0 28px;
     }
 
@@ -326,11 +361,11 @@
       font-size: 14px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--sepia-dark);
+      color: var(--canvas-accent);
     }
 
     .article-card:hover .card-read {
-      color: var(--ink);
+      color: var(--canvas-ink);
     }
 
     .dinkus {
@@ -339,7 +374,7 @@
       font-weight: 700;
       font-size: 28px;
       letter-spacing: 0.25em;
-      color: var(--sepia-dark);
+      color: var(--canvas-accent);
       margin: auto 0 0;
       padding: 0 0 40px;
     }
@@ -425,7 +460,7 @@
     </div>
 
     <div class="top-right-group">
-      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
           <circle cx="12" cy="12" r="4.5"/>
           <line x1="12" y1="2" x2="12" y2="5"/>
@@ -439,6 +474,10 @@
         </svg>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+        </svg>
+        <svg class="icon-contrast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>
         </svg>
       </button>
     </div>
@@ -532,6 +571,7 @@
 
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
+      var THEMES = ['light', 'dark', 'mono-light', 'mono-dark'];
 
       function setFavicons(isDark) {
         var suffix = isDark ? 'dark' : 'light';
@@ -541,17 +581,25 @@
         document.getElementById('favicon-apple').href = 'favicon/apple-touch-icon-' + suffix + '.png';
       }
 
-      function toggleTheme() {
-        var isDark = root.getAttribute('data-theme') === 'dark';
-        if (isDark) {
+      function currentTheme() {
+        var stored;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        return THEMES.indexOf(stored) !== -1 ? stored : 'light';
+      }
+
+      function applyTheme(theme) {
+        if (theme === 'light') {
           root.removeAttribute('data-theme');
-          try { localStorage.setItem('theme', 'light'); } catch (e) {}
-          setFavicons(false);
         } else {
-          root.setAttribute('data-theme', 'dark');
-          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
-          setFavicons(true);
+          root.setAttribute('data-theme', theme);
         }
+        setFavicons(theme === 'dark' || theme === 'mono-dark');
+        try { localStorage.setItem('theme', theme); } catch (e) {}
+      }
+
+      function toggleTheme() {
+        var next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
+        applyTheme(next);
       }
 
       themeToggle.addEventListener('click', toggleTheme);
