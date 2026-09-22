@@ -63,10 +63,10 @@
       --frame-bg: #e6d6b8;
       --frame-ink: #000000;
       --frame-accent: #8a6d42;
-      --frame-track-tint: rgba(0, 0, 0, 0.08);
       --canvas-bg: #f8f4ee;
       --canvas-ink: #000000;
       --canvas-accent: #8a6d42;
+      --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --rule: #e4ddd3;
       --frame-margin: 100px;
       --brand-offset: 100px;
@@ -81,10 +81,10 @@
       --frame-bg: #0d1330;
       --frame-ink: #ffffff;
       --frame-accent: #9fb0d9;
-      --frame-track-tint: rgba(255, 255, 255, 0.15);
       --canvas-bg: #000000;
       --canvas-ink: #ffffff;
       --canvas-accent: #9fb0d9;
+      --canvas-track-tint: rgba(255, 255, 255, 0.15);
       --rule: #232c4c;
     }
 
@@ -92,7 +92,6 @@
       --frame-bg: #000000;
       --frame-ink: #ffffff;
       --frame-accent: #a3a3a3;
-      --frame-track-tint: rgba(255, 255, 255, 0.15);
       --canvas-accent: #000000;
     }
 
@@ -100,10 +99,10 @@
       --frame-bg: #ffffff;
       --frame-ink: #000000;
       --frame-accent: #4d4d4d;
-      --frame-track-tint: rgba(0, 0, 0, 0.08);
       --canvas-bg: #000000;
       --canvas-ink: #ffffff;
       --canvas-accent: #ffffff;
+      --canvas-track-tint: rgba(255, 255, 255, 0.15);
       --rule: #232c4c;
     }
 
@@ -273,7 +272,7 @@
       width: 12px;
       height: calc(100vh - 179px);
       border-radius: 0;
-      background: var(--frame-track-tint);
+      background: var(--canvas-track-tint);
       z-index: 40;
       opacity: 0;
       transition: right 0.6s ease, opacity 0.3s ease;
@@ -286,7 +285,7 @@
       width: 12px;
       height: 0px;
       border-radius: 0;
-      background: var(--frame-accent);
+      background: var(--canvas-accent);
       z-index: 41;
       opacity: 0;
       transition: right 0.6s ease, opacity 0.3s ease;
@@ -314,7 +313,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease, right 0.6s ease;
       z-index: 42;
-      color: var(--frame-accent);
+      color: var(--canvas-accent);
     }
 
     .scroll-top-btn.visible {
@@ -323,7 +322,7 @@
     }
 
     .scroll-top-btn:hover {
-      color: var(--frame-ink);
+      color: var(--canvas-ink);
     }
 
     .scroll-top-btn svg {
