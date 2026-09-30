@@ -493,7 +493,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 350);
+        }, 500);
       });
 
       var track = document.querySelector('.scroll-progress-track');
@@ -597,20 +597,20 @@
           var gain = audioCtx.createGain();
           gain.gain.setValueAtTime(0, now);
           gain.gain.linearRampToValueAtTime(0.1, now + 0.006);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
 
           var gain2 = audioCtx.createGain();
           gain2.gain.setValueAtTime(0, now);
           gain2.gain.linearRampToValueAtTime(0.025, now + 0.006);
-          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
 
           osc.connect(gain).connect(audioCtx.destination);
           osc2.connect(gain2).connect(audioCtx.destination);
 
           osc.start(now);
-          osc.stop(now + 0.32);
+          osc.stop(now + 0.45);
           osc2.start(now);
-          osc2.stop(now + 0.28);
+          osc2.stop(now + 0.38);
         } catch (e) {}
       }
 
