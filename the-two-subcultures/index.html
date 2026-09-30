@@ -174,7 +174,7 @@
     .theme-toggle {
       position: fixed;
       top: 44px;
-      right: 40px;
+      right: var(--frame-margin);
       z-index: 50;
       display: flex;
       align-items: center;
@@ -184,6 +184,7 @@
       padding: 0;
       cursor: pointer;
       color: var(--frame-ink);
+      transition: right 0.6s ease;
     }
 
     .theme-toggle:hover {
@@ -210,13 +211,14 @@
     .hamburger-btn {
       position: fixed;
       top: 44px;
-      left: 40px;
+      left: var(--frame-margin);
       z-index: 50;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       color: var(--frame-ink);
+      transition: left 0.6s ease;
     }
 
     .hamburger-btn:hover {
@@ -599,14 +601,6 @@
         top: 28px;
       }
 
-      .theme-toggle {
-        right: 24px;
-      }
-
-      .hamburger-btn {
-        left: 24px;
-      }
-
       .site-title {
         font-size: 26px;
       }
@@ -653,14 +647,6 @@
       .theme-toggle,
       .hamburger-btn {
         top: 20px;
-      }
-
-      .theme-toggle {
-        right: 16px;
-      }
-
-      .hamburger-btn {
-        left: 16px;
       }
 
       .site-title {
