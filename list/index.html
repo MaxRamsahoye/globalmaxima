@@ -83,7 +83,7 @@
       z-index: 9999;
       opacity: 0.55;
       transform: scale(0.3);
-      animation: click-ripple-anim 0.55s ease-out forwards;
+      animation: click-ripple-anim 0.4s ease-out forwards;
     }
 
     @keyframes click-ripple-anim {
@@ -242,6 +242,8 @@
 
       function goBack() {
         playPianoClick();
+        var rect = backArrow.getBoundingClientRect();
+        spawnRipple(rect.left + rect.width / 2, rect.top + rect.height / 2, getComputedStyle(backArrow).color);
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           if (window.history.length > 1) {
@@ -363,7 +365,17 @@
       }
 
       document.addEventListener('click', function (e) {
-        spawnRipple(e.clientX, e.clientY, getComputedStyle(e.target).color);
+        var iconBtn = e.target.closest('.theme-toggle, .hamburger-btn, .back-arrow, .scroll-top-btn, .scroll-down-btn');
+        var x, y;
+        if (iconBtn) {
+          var rect = iconBtn.getBoundingClientRect();
+          x = rect.left + rect.width / 2;
+          y = rect.top + rect.height / 2;
+        } else {
+          x = e.clientX;
+          y = e.clientY;
+        }
+        spawnRipple(x, y, getComputedStyle(e.target).color);
       });
     })();
   </script>
