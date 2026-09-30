@@ -89,7 +89,7 @@
     .back-arrow {
       position: fixed;
       top: 50%;
-      left: 40px;
+      left: 80px;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
@@ -109,7 +109,7 @@
 
     @media (max-width: 480px) {
       .back-arrow {
-        left: 20px;
+        left: 40px;
       }
     }
 
@@ -121,7 +121,7 @@
       color: var(--canvas-ink);
       text-decoration: none;
       display: inline-block;
-      margin: 0 0 56px;
+      margin: 0 0 24px;
     }
 
     .list-heading:hover {
@@ -202,6 +202,60 @@
         }, 350);
       });
 
+      var backArrow = document.querySelector('.back-arrow');
+      backArrow.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        document.body.classList.remove('page-visible');
+        setTimeout(function () {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            location.href = backArrow.getAttribute('href');
+          }
+        }, 350);
+      });
+
+      var root = document.documentElement;
+      var THEMES = ['light', 'dark'];
+
+      function setFavicons(isDark) {
+        var suffix = isDark ? 'dark' : 'light';
+        document.getElementById('favicon-ico').href = '../favicon/favicon-' + suffix + '.ico';
+        document.getElementById('favicon-32').href = '../favicon/favicon-32-' + suffix + '.png';
+        document.getElementById('favicon-192').href = '../favicon/favicon-192-' + suffix + '.png';
+        document.getElementById('favicon-apple').href = '../favicon/apple-touch-icon-' + suffix + '.png';
+      }
+
+      function currentTheme() {
+        var stored;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        return THEMES.indexOf(stored) !== -1 ? stored : 'light';
+      }
+
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          root.removeAttribute('data-theme');
+        } else {
+          root.setAttribute('data-theme', theme);
+        }
+        setFavicons(theme === 'dark');
+        try { localStorage.setItem('theme', theme); } catch (e) {}
+      }
+
+      function toggleTheme() {
+        var next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
+        applyTheme(next);
+      }
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 't' && e.key !== 'T') return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        var tag = document.activeElement && document.activeElement.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement && document.activeElement.isContentEditable)) return;
+        toggleTheme();
+      });
+
       var audioCtx = null;
       var pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
 
@@ -227,20 +281,20 @@
           var gain = audioCtx.createGain();
           gain.gain.setValueAtTime(0, now);
           gain.gain.linearRampToValueAtTime(0.1, now + 0.006);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
 
           var gain2 = audioCtx.createGain();
           gain2.gain.setValueAtTime(0, now);
           gain2.gain.linearRampToValueAtTime(0.025, now + 0.006);
-          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
 
           osc.connect(gain).connect(audioCtx.destination);
           osc2.connect(gain2).connect(audioCtx.destination);
 
           osc.start(now);
-          osc.stop(now + 0.9);
+          osc.stop(now + 0.32);
           osc2.start(now);
-          osc2.stop(now + 0.6);
+          osc2.stop(now + 0.28);
         } catch (e) {}
       }
 
