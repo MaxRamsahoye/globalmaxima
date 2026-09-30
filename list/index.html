@@ -65,6 +65,9 @@
     body {
       margin: 0;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: var(--canvas-bg);
       font-family: var(--serif);
       color: var(--canvas-ink);
@@ -80,18 +83,18 @@
     .list-wrap {
       max-width: 640px;
       margin: 0 auto;
-      padding: 140px 24px 120px;
+      padding: 60px 24px;
     }
 
     .list-heading {
       font-family: var(--serif);
-      font-size: 32px;
+      font-size: 60px;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--canvas-ink);
       text-decoration: none;
       display: inline-block;
-      margin: 0 0 48px;
+      margin: 0 0 56px;
     }
 
     .list-heading:hover {
@@ -104,19 +107,11 @@
       padding: 0;
     }
 
-    .article-list li {
-      border-top: 1px solid var(--rule);
-    }
-
-    .article-list li:last-child {
-      border-bottom: 1px solid var(--rule);
-    }
-
     .article-list a {
       display: block;
-      padding: 26px 0;
+      padding: 16px 0;
       font-family: var(--serif);
-      font-size: 22px;
+      font-size: 26px;
       color: var(--canvas-ink);
       text-decoration: none;
       transition: color 0.2s ease;
@@ -127,16 +122,12 @@
     }
 
     @media (max-width: 480px) {
-      .list-wrap {
-        padding: 100px 20px 80px;
-      }
-
       .list-heading {
-        font-size: 26px;
+        font-size: 40px;
       }
 
       .article-list a {
-        font-size: 19px;
+        font-size: 21px;
       }
     }
   </style>
@@ -176,6 +167,50 @@
           location.href = link.href;
         }, 350);
       });
+
+      var audioCtx = null;
+      var pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+
+      function playPianoClick() {
+        try {
+          if (!audioCtx) {
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            audioCtx = new AC();
+          }
+          if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+          var freq = pianoNotes[Math.floor(Math.random() * pianoNotes.length)];
+          var now = audioCtx.currentTime;
+
+          var osc = audioCtx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+
+          var osc2 = audioCtx.createOscillator();
+          osc2.type = 'sine';
+          osc2.frequency.value = freq * 2;
+
+          var gain = audioCtx.createGain();
+          gain.gain.setValueAtTime(0, now);
+          gain.gain.linearRampToValueAtTime(0.1, now + 0.006);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+
+          var gain2 = audioCtx.createGain();
+          gain2.gain.setValueAtTime(0, now);
+          gain2.gain.linearRampToValueAtTime(0.025, now + 0.006);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+
+          osc.connect(gain).connect(audioCtx.destination);
+          osc2.connect(gain2).connect(audioCtx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.9);
+          osc2.start(now);
+          osc2.stop(now + 0.6);
+        } catch (e) {}
+      }
+
+      document.addEventListener('click', playPianoClick);
     })();
   </script>
 </body>
