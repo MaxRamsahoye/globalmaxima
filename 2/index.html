@@ -59,6 +59,7 @@
       --canvas-ink: #000000;
       --canvas-accent: #000000;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
+      --selection-bg: rgba(0, 0, 0, 0.15);
       --rule: #e4ddd3;
       --frame-margin: 300px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
@@ -72,6 +73,7 @@
       --canvas-ink: #000000;
       --canvas-accent: #8a6d42;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
+      --selection-bg: rgba(138, 109, 66, 0.3);
       --rule: #e4ddd3;
     }
 
@@ -83,6 +85,7 @@
       --canvas-ink: #ffffff;
       --canvas-accent: #9fb0d9;
       --canvas-track-tint: rgba(255, 255, 255, 0.15);
+      --selection-bg: rgba(159, 176, 217, 0.35);
       --rule: #232c4c;
     }
 
@@ -94,11 +97,22 @@
       --canvas-ink: #ffffff;
       --canvas-accent: #ffffff;
       --canvas-track-tint: rgba(255, 255, 255, 0.15);
+      --selection-bg: rgba(255, 255, 255, 0.25);
       --rule: #232c4c;
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    ::selection {
+      background: var(--selection-bg);
+      color: var(--canvas-ink);
+    }
+
+    ::-moz-selection {
+      background: var(--selection-bg);
+      color: var(--canvas-ink);
     }
 
     html {
