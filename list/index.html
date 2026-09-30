@@ -69,6 +69,30 @@
       color: var(--canvas-ink);
     }
 
+    .click-ripple {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      margin-left: -8px;
+      margin-top: -8px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.55;
+      transform: scale(0.3);
+      animation: click-ripple-anim 0.55s ease-out forwards;
+    }
+
+    @keyframes click-ripple-anim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
     html {
       background: var(--canvas-bg);
       scroll-behavior: smooth;
@@ -325,6 +349,22 @@
       }
 
       document.addEventListener('click', playPianoClick);
+
+      function spawnRipple(x, y, color) {
+        var ripple = document.createElement('div');
+        ripple.className = 'click-ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.borderColor = color;
+        document.body.appendChild(ripple);
+        ripple.addEventListener('animationend', function () {
+          ripple.remove();
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        spawnRipple(e.clientX, e.clientY, getComputedStyle(e.target).color);
+      });
     })();
   </script>
 </body>
