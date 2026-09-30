@@ -69,6 +69,7 @@
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --rule: #e4ddd3;
       --frame-margin: 100px;
+      --header-margin: 100px;
       --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
@@ -154,7 +155,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 69px var(--frame-margin) 0 0;
+      padding: 69px var(--header-margin) 0 0;
     }
 
     .site-title {
@@ -174,12 +175,11 @@
     .left-controls {
       position: fixed;
       top: 81.5px;
-      left: var(--frame-margin);
+      left: var(--header-margin);
       z-index: 50;
       display: flex;
       align-items: center;
       gap: 24px;
-      transition: left 0.6s ease;
     }
 
     .theme-toggle {
@@ -582,6 +582,7 @@
     @media (max-width: 960px) {
       :root {
         --frame-margin: 0px;
+        --header-margin: 0px;
       }
 
       body {
