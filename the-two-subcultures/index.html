@@ -153,8 +153,8 @@
       height: 175px;
       display: flex;
       align-items: flex-start;
-      justify-content: center;
-      padding: 69px 0 0;
+      justify-content: flex-end;
+      padding: 69px var(--frame-margin) 0 0;
     }
 
     .site-title {
@@ -171,11 +171,18 @@
       color: var(--frame-accent);
     }
 
-    .theme-toggle {
+    .left-controls {
       position: fixed;
-      top: 77.5px;
-      right: var(--frame-margin);
+      top: 76.5px;
+      left: var(--frame-margin);
       z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      transition: left 0.6s ease;
+    }
+
+    .theme-toggle {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -184,7 +191,6 @@
       padding: 0;
       cursor: pointer;
       color: var(--frame-ink);
-      transition: right 0.6s ease;
     }
 
     .theme-toggle:hover {
@@ -209,16 +215,11 @@
     }
 
     .hamburger-btn {
-      position: fixed;
-      top: 76.5px;
-      left: var(--frame-margin);
-      z-index: 50;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       color: var(--frame-ink);
-      transition: left 0.6s ease;
     }
 
     .hamburger-btn:hover {
@@ -596,11 +597,7 @@
         padding-top: 51px;
       }
 
-      .theme-toggle {
-        top: 57px;
-      }
-
-      .hamburger-btn {
+      .left-controls {
         top: 56px;
       }
 
@@ -647,11 +644,7 @@
         padding-top: 33px;
       }
 
-      .theme-toggle {
-        top: 37.5px;
-      }
-
-      .hamburger-btn {
+      .left-controls {
         top: 36.5px;
       }
 
@@ -690,30 +683,32 @@
     <a class="site-title" href="../">Global Maxima</a>
   </div>
 
-  <a class="hamburger-btn" href="../list/" aria-label="Contents">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-      <line x1="3" y1="6" x2="21" y2="6"/>
-      <line x1="3" y1="12" x2="21" y2="12"/>
-      <line x1="3" y1="18" x2="21" y2="18"/>
-    </svg>
-  </a>
+  <div class="left-controls">
+    <a class="hamburger-btn" href="../list/" aria-label="Contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </a>
 
-  <button class="theme-toggle" type="button" aria-label="Toggle theme">
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-      <circle cx="12" cy="12" r="4.5"/>
-      <line x1="12" y1="2" x2="12" y2="5"/>
-      <line x1="12" y1="19" x2="12" y2="22"/>
-      <line x1="2" y1="12" x2="5" y2="12"/>
-      <line x1="19" y1="12" x2="22" y2="12"/>
-      <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
-      <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
-      <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
-      <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
-    </svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
-    </svg>
-  </button>
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="5" y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
+        <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
+        <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
+        <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+      </svg>
+    </button>
+  </div>
 
   <div class="scroll-progress-track"></div>
   <div class="scroll-progress-fill"></div>
