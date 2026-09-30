@@ -11,9 +11,9 @@
     (function () {
       try {
         var t = localStorage.getItem('theme');
-        if (t === 'dark' || t === 'mono-light' || t === 'mono-dark') {
+        if (t === 'sepia' || t === 'midnight' || t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
-          var suffix = (t === 'dark' || t === 'mono-dark') ? 'dark' : 'light';
+          var suffix = (t === 'midnight' || t === 'dark') ? 'dark' : 'light';
           document.getElementById('favicon-ico').href = '../favicon/favicon-' + suffix + '.ico';
           document.getElementById('favicon-32').href = '../favicon/favicon-32-' + suffix + '.png';
           document.getElementById('favicon-192').href = '../favicon/favicon-192-' + suffix + '.png';
@@ -52,6 +52,19 @@
     }
 
     :root {
+      --frame-bg: #000000;
+      --frame-ink: #ffffff;
+      --frame-accent: #a3a3a3;
+      --canvas-bg: #f8f4ee;
+      --canvas-ink: #000000;
+      --canvas-accent: #000000;
+      --canvas-track-tint: rgba(0, 0, 0, 0.08);
+      --rule: #e4ddd3;
+      --frame-margin: 300px;
+      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    html[data-theme="sepia"] {
       --frame-bg: #e6d6b8;
       --frame-ink: #000000;
       --frame-accent: #8a6d42;
@@ -60,11 +73,9 @@
       --canvas-accent: #8a6d42;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --rule: #e4ddd3;
-      --frame-margin: 300px;
-      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
-    html[data-theme="dark"] {
+    html[data-theme="midnight"] {
       --frame-bg: #0d1330;
       --frame-ink: #ffffff;
       --frame-accent: #9fb0d9;
@@ -75,14 +86,7 @@
       --rule: #232c4c;
     }
 
-    html[data-theme="mono-light"] {
-      --frame-bg: #000000;
-      --frame-ink: #ffffff;
-      --frame-accent: #a3a3a3;
-      --canvas-accent: #000000;
-    }
-
-    html[data-theme="mono-dark"] {
+    html[data-theme="dark"] {
       --frame-bg: #ffffff;
       --frame-ink: #000000;
       --frame-accent: #4d4d4d;
@@ -205,30 +209,28 @@
       height: 20px;
     }
 
-    .theme-toggle .icon-moon,
-    .theme-toggle .icon-contrast {
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
       display: none;
     }
 
-    html[data-theme="dark"] .theme-toggle .icon-sun {
+    html[data-theme="sepia"] .theme-toggle .icon-contrast {
       display: none;
     }
 
-    html[data-theme="dark"] .theme-toggle .icon-moon {
+    html[data-theme="sepia"] .theme-toggle .icon-sun {
       display: block;
     }
 
-    html[data-theme="mono-light"] .theme-toggle .icon-sun,
-    html[data-theme="mono-dark"] .theme-toggle .icon-sun {
+    html[data-theme="midnight"] .theme-toggle .icon-contrast {
       display: none;
     }
 
-    html[data-theme="mono-light"] .theme-toggle .icon-contrast,
-    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+    html[data-theme="midnight"] .theme-toggle .icon-moon {
       display: block;
     }
 
-    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+    html[data-theme="dark"] .theme-toggle .icon-contrast {
       transform: scaleX(-1);
     }
 
@@ -602,7 +604,7 @@
 
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
-      var THEMES = ['light', 'dark', 'mono-light', 'mono-dark'];
+      var THEMES = ['light', 'sepia', 'midnight', 'dark'];
 
       function setFavicons(isDark) {
         var suffix = isDark ? 'dark' : 'light';
@@ -624,7 +626,7 @@
         } else {
           root.setAttribute('data-theme', theme);
         }
-        setFavicons(theme === 'dark' || theme === 'mono-dark');
+        setFavicons(theme === 'midnight' || theme === 'dark');
         try { localStorage.setItem('theme', theme); } catch (e) {}
       }
 

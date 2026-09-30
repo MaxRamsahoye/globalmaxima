@@ -11,9 +11,9 @@
     (function () {
       try {
         var t = localStorage.getItem('theme');
-        if (t === 'dark' || t === 'mono-light' || t === 'mono-dark') {
+        if (t === 'sepia' || t === 'midnight' || t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
-          var suffix = (t === 'dark' || t === 'mono-dark') ? 'dark' : 'light';
+          var suffix = (t === 'midnight' || t === 'dark') ? 'dark' : 'light';
           document.getElementById('favicon-ico').href = 'favicon/favicon-' + suffix + '.ico';
           document.getElementById('favicon-32').href = 'favicon/favicon-32-' + suffix + '.png';
           document.getElementById('favicon-192').href = 'favicon/favicon-192-' + suffix + '.png';
@@ -52,22 +52,24 @@
     }
 
     :root {
-      --frame-bg: #e6d6b8;
-      --frame-ink: #000000;
-      --frame-accent: #8a6d42;
+      --canvas-bg: #f8f4ee;
+      --canvas-ink: #000000;
+      --canvas-accent: #000000;
+      --canvas-track-tint: rgba(0, 0, 0, 0.08);
+      --rule: #e4ddd3;
+      --edge-margin: 40px;
+      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    html[data-theme="sepia"] {
       --canvas-bg: #f8f4ee;
       --canvas-ink: #000000;
       --canvas-accent: #8a6d42;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --rule: #e4ddd3;
-      --frame-margin: 100px;
-      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
     }
 
-    html[data-theme="dark"] {
-      --frame-bg: #0d1330;
-      --frame-ink: #ffffff;
-      --frame-accent: #9fb0d9;
+    html[data-theme="midnight"] {
       --canvas-bg: #000000;
       --canvas-ink: #ffffff;
       --canvas-accent: #9fb0d9;
@@ -75,17 +77,7 @@
       --rule: #232c4c;
     }
 
-    html[data-theme="mono-light"] {
-      --frame-bg: #000000;
-      --frame-ink: #ffffff;
-      --frame-accent: #a3a3a3;
-      --canvas-accent: #000000;
-    }
-
-    html[data-theme="mono-dark"] {
-      --frame-bg: #ffffff;
-      --frame-ink: #000000;
-      --frame-accent: #4d4d4d;
+    html[data-theme="dark"] {
       --canvas-bg: #000000;
       --canvas-ink: #ffffff;
       --canvas-accent: #ffffff;
@@ -98,7 +90,7 @@
     }
 
     html {
-      background: var(--frame-bg);
+      background: var(--canvas-bg);
       scroll-behavior: smooth;
       scrollbar-width: none;
     }
@@ -111,10 +103,9 @@
       position: relative;
       margin: 0;
       min-height: 100vh;
-      background: var(--frame-bg);
-      padding: 250px var(--frame-margin) 0;
+      background: var(--canvas-bg);
       font-family: var(--serif);
-      color: var(--frame-ink);
+      color: var(--canvas-ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
       transition: background-color 0.25s ease, opacity 0.35s ease-in-out;
@@ -125,72 +116,18 @@
     }
 
     .page {
-      background: var(--canvas-bg);
-      border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 250px);
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
+      background: var(--canvas-bg);
       transition: background-color 0.25s ease;
     }
 
-    .frame-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 0 60px 0 var(--frame-margin);
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .site-title {
-      font-family: var(--serif);
-      font-size: 46px;
-      letter-spacing: -0.02em;
-      color: var(--frame-ink);
-      text-decoration: none;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .site-title:hover {
-      color: var(--frame-accent);
-    }
-
-    .site-quote {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 18px;
-      color: var(--frame-accent);
-    }
-
-    .site-description {
-      font-family: var(--serif);
-      font-size: 18px;
-      line-height: 1.4;
-      color: var(--frame-ink);
-      white-space: nowrap;
-      margin: 0;
-    }
-
-    .top-right-group {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      min-height: 36px;
-      flex-shrink: 0;
-    }
-
     .theme-toggle {
+      position: fixed;
+      top: 40px;
+      right: var(--edge-margin);
+      z-index: 50;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -198,11 +135,11 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      color: var(--frame-ink);
+      color: var(--canvas-ink);
     }
 
     .theme-toggle:hover {
-      color: var(--frame-accent);
+      color: var(--canvas-accent);
     }
 
     .theme-toggle svg {
@@ -210,39 +147,37 @@
       height: 20px;
     }
 
-    .theme-toggle .icon-moon,
-    .theme-toggle .icon-contrast {
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
       display: none;
     }
 
-    html[data-theme="dark"] .theme-toggle .icon-sun {
+    html[data-theme="sepia"] .theme-toggle .icon-contrast {
       display: none;
     }
 
-    html[data-theme="dark"] .theme-toggle .icon-moon {
+    html[data-theme="sepia"] .theme-toggle .icon-sun {
       display: block;
     }
 
-    html[data-theme="mono-light"] .theme-toggle .icon-sun,
-    html[data-theme="mono-dark"] .theme-toggle .icon-sun {
+    html[data-theme="midnight"] .theme-toggle .icon-contrast {
       display: none;
     }
 
-    html[data-theme="mono-light"] .theme-toggle .icon-contrast,
-    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+    html[data-theme="midnight"] .theme-toggle .icon-moon {
       display: block;
     }
 
-    html[data-theme="mono-dark"] .theme-toggle .icon-contrast {
+    html[data-theme="dark"] .theme-toggle .icon-contrast {
       transform: scaleX(-1);
     }
 
     .scroll-progress-track {
       position: fixed;
-      top: 254px;
-      right: var(--frame-margin);
+      top: 100px;
+      right: var(--edge-margin);
       width: 12px;
-      height: calc(100vh - 254px);
+      height: calc(100vh - 100px);
       border-radius: 0;
       background: var(--canvas-track-tint);
       z-index: 40;
@@ -252,8 +187,8 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 254px;
-      right: var(--frame-margin);
+      top: 100px;
+      right: var(--edge-margin);
       width: 12px;
       height: 0px;
       border-radius: 0;
@@ -271,7 +206,7 @@
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
-      right: calc(var(--frame-margin) + 40px);
+      right: calc(var(--edge-margin) + 40px);
       width: 34px;
       height: 34px;
       display: flex;
@@ -306,6 +241,43 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 110px 40px 100px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 860px;
+      margin: 0 auto 70px;
+    }
+
+    .site-title {
+      font-family: var(--serif);
+      font-size: 46px;
+      letter-spacing: -0.02em;
+      color: var(--canvas-ink);
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .site-title:hover {
+      color: var(--canvas-accent);
+    }
+
+    .site-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--canvas-accent);
+    }
+
+    .site-description {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--canvas-ink);
+      margin: 0;
     }
 
     .article-grid {
@@ -381,29 +353,20 @@
 
     @media (max-width: 900px) {
       :root {
-        --frame-margin: 24px;
+        --edge-margin: 24px;
       }
 
-      body {
-        padding-top: 200px;
-      }
-
-      .page {
-        min-height: calc(100vh - 200px);
-      }
-
-      .frame-header {
-        height: 200px;
-        padding-right: 24px;
+      .theme-toggle {
+        top: 24px;
       }
 
       .scroll-progress-track,
       .scroll-progress-fill {
-        top: 204px;
+        top: 80px;
       }
 
       .scroll-progress-track {
-        height: calc(100vh - 204px);
+        height: calc(100vh - 80px);
       }
 
       .site-title {
@@ -411,7 +374,11 @@
       }
 
       .library-grid {
-        padding: 80px 24px 80px;
+        padding: 90px 24px 80px;
+      }
+
+      .brand {
+        margin-bottom: 50px;
       }
 
       .article-card {
@@ -419,28 +386,7 @@
       }
     }
 
-    @media (max-width: 660px) {
-      .site-description {
-        white-space: normal;
-      }
-    }
-
     @media (max-width: 480px) {
-      .frame-header {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 14px;
-        padding-top: 24px;
-        padding-bottom: 24px;
-      }
-
-      .top-right-group {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-      }
-
       .site-title {
         font-size: 30px;
       }
@@ -452,49 +398,45 @@
   </style>
 </head>
 <body>
-  <div class="frame-header">
-    <div class="brand">
-      <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
-      <a class="site-title" href="./">Global Maxima</a>
-      <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by Max Ramsahoye.</p>
-    </div>
-
-    <div class="top-right-group">
-      <button class="theme-toggle" type="button" aria-label="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-          <circle cx="12" cy="12" r="4.5"/>
-          <line x1="12" y1="2" x2="12" y2="5"/>
-          <line x1="12" y1="19" x2="12" y2="22"/>
-          <line x1="2" y1="12" x2="5" y2="12"/>
-          <line x1="19" y1="12" x2="22" y2="12"/>
-          <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
-          <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
-          <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
-          <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
-        </svg>
-        <svg class="icon-contrast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="scroll-progress-track"></div>
-  <div class="scroll-progress-fill"></div>
-
-  <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
-      <polygon points="3,23 13,16.5 23,23 13,3"/>
-      <line x1="13" y1="16.5" x2="13" y2="3"/>
-    </svg>
-  </button>
-
   <div class="page">
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="5" y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
+        <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
+        <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
+        <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+      </svg>
+      <svg class="icon-contrast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
+
+    <div class="scroll-progress-track"></div>
+    <div class="scroll-progress-fill"></div>
+
+    <button class="scroll-top-btn" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
+        <polygon points="3,23 13,16.5 23,23 13,3"/>
+        <line x1="13" y1="16.5" x2="13" y2="3"/>
+      </svg>
+    </button>
+
     <div class="library-grid">
+      <div class="brand">
+        <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
+        <a class="site-title" href="./">Global Maxima</a>
+        <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by Max Ramsahoye.</p>
+      </div>
+
       <div class="article-grid">
         <a class="article-card" href="the-two-subcultures/">
           <h2 class="card-title">The Two Subcultures</h2>
@@ -571,7 +513,7 @@
 
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
-      var THEMES = ['light', 'dark', 'mono-light', 'mono-dark'];
+      var THEMES = ['light', 'sepia', 'midnight', 'dark'];
 
       function setFavicons(isDark) {
         var suffix = isDark ? 'dark' : 'light';
@@ -593,7 +535,7 @@
         } else {
           root.setAttribute('data-theme', theme);
         }
-        setFavicons(theme === 'dark' || theme === 'mono-dark');
+        setFavicons(theme === 'midnight' || theme === 'dark');
         try { localStorage.setItem('theme', theme); } catch (e) {}
       }
 
