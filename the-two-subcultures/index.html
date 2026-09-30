@@ -11,9 +11,9 @@
     (function () {
       try {
         var t = localStorage.getItem('theme');
-        if (t === 'sepia' || t === 'midnight' || t === 'dark') {
+        if (t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
-          var suffix = (t === 'midnight' || t === 'dark') ? 'dark' : 'light';
+          var suffix = 'dark';
           document.getElementById('favicon-ico').href = '../favicon/favicon-' + suffix + '.ico';
           document.getElementById('favicon-32').href = '../favicon/favicon-32-' + suffix + '.png';
           document.getElementById('favicon-192').href = '../favicon/favicon-192-' + suffix + '.png';
@@ -169,6 +169,63 @@
 
     .site-title:hover {
       color: var(--frame-accent);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 44px;
+      right: 40px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--frame-ink);
+    }
+
+    .theme-toggle:hover {
+      color: var(--frame-accent);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-moon {
+      display: block;
+    }
+
+    .hamburger-btn {
+      position: fixed;
+      top: 44px;
+      left: 40px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--frame-ink);
+    }
+
+    .hamburger-btn:hover {
+      color: var(--frame-accent);
+    }
+
+    .hamburger-btn svg {
+      width: 22px;
+      height: 22px;
     }
 
     html {
@@ -537,6 +594,19 @@
         padding-top: 51px;
       }
 
+      .theme-toggle,
+      .hamburger-btn {
+        top: 28px;
+      }
+
+      .theme-toggle {
+        right: 24px;
+      }
+
+      .hamburger-btn {
+        left: 24px;
+      }
+
       .site-title {
         font-size: 26px;
       }
@@ -580,6 +650,19 @@
         padding-top: 33px;
       }
 
+      .theme-toggle,
+      .hamburger-btn {
+        top: 20px;
+      }
+
+      .theme-toggle {
+        right: 16px;
+      }
+
+      .hamburger-btn {
+        left: 16px;
+      }
+
       .site-title {
         font-size: 24px;
       }
@@ -614,6 +697,31 @@
   <div class="frame-header">
     <a class="site-title" href="../">Global Maxima</a>
   </div>
+
+  <a class="hamburger-btn" href="../list/" aria-label="Contents">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </a>
+
+  <button class="theme-toggle" type="button" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="12" cy="12" r="4.5"/>
+      <line x1="12" y1="2" x2="12" y2="5"/>
+      <line x1="12" y1="19" x2="12" y2="22"/>
+      <line x1="2" y1="12" x2="5" y2="12"/>
+      <line x1="19" y1="12" x2="22" y2="12"/>
+      <line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/>
+      <line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/>
+      <line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/>
+      <line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+    </svg>
+  </button>
 
   <div class="scroll-progress-track"></div>
   <div class="scroll-progress-fill"></div>
@@ -787,8 +895,9 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
+      var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
-      var THEMES = ['light', 'sepia', 'midnight', 'dark'];
+      var THEMES = ['light', 'dark'];
 
       function setFavicons(isDark) {
         var suffix = isDark ? 'dark' : 'light';
@@ -810,7 +919,7 @@
         } else {
           root.setAttribute('data-theme', theme);
         }
-        setFavicons(theme === 'midnight' || theme === 'dark');
+        setFavicons(theme === 'dark');
         try { localStorage.setItem('theme', theme); } catch (e) {}
       }
 
@@ -818,6 +927,8 @@
         var next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
         applyTheme(next);
       }
+
+      themeToggle.addEventListener('click', toggleTheme);
 
       document.addEventListener('keydown', function (e) {
         if (e.key !== 't' && e.key !== 'T') return;

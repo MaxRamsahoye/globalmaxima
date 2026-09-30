@@ -11,9 +11,9 @@
     (function () {
       try {
         var t = localStorage.getItem('theme');
-        if (t === 'sepia' || t === 'midnight' || t === 'dark') {
+        if (t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
-          var suffix = (t === 'midnight' || t === 'dark') ? 'dark' : 'light';
+          var suffix = 'dark';
           document.getElementById('favicon-ico').href = 'favicon/favicon-' + suffix + '.ico';
           document.getElementById('favicon-32').href = 'favicon/favicon-32-' + suffix + '.png';
           document.getElementById('favicon-192').href = 'favicon/favicon-192-' + suffix + '.png';
@@ -245,7 +245,7 @@
     .library-grid {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 110px 40px 100px;
+      padding: 180px 40px 100px;
     }
 
     .brand {
@@ -262,7 +262,7 @@
       letter-spacing: -0.02em;
       color: var(--canvas-ink);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 800;
       white-space: nowrap;
     }
 
@@ -387,7 +387,7 @@
       }
 
       .library-grid {
-        padding: 90px 24px 80px;
+        padding: 140px 24px 80px;
       }
 
       .brand {
@@ -534,7 +534,7 @@
 
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
-      var THEMES = ['light', 'sepia', 'midnight', 'dark'];
+      var THEMES = ['light', 'dark'];
 
       function setFavicons(isDark) {
         var suffix = isDark ? 'dark' : 'light';
@@ -556,7 +556,7 @@
         } else {
           root.setAttribute('data-theme', theme);
         }
-        setFavicons(theme === 'midnight' || theme === 'dark');
+        setFavicons(theme === 'dark');
         try { localStorage.setItem('theme', theme); } catch (e) {}
       }
 

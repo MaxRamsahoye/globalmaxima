@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link id="favicon-ico" rel="icon" href="../favicon/favicon-light.ico" sizes="any">
+  <link id="favicon-32" rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32-light.png">
+  <link id="favicon-192" rel="icon" type="image/png" sizes="192x192" href="../favicon/favicon-192-light.png">
+  <link id="favicon-apple" rel="apple-touch-icon" href="../favicon/apple-touch-icon-light.png">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.getElementById('favicon-ico').href = '../favicon/favicon-dark.ico';
+          document.getElementById('favicon-32').href = '../favicon/favicon-32-dark.png';
+          document.getElementById('favicon-192').href = '../favicon/favicon-192-dark.png';
+          document.getElementById('favicon-apple').href = '../favicon/apple-touch-icon-dark.png';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <title>Contents — Global Maxima</title>
+  <style>
+    @font-face {
+      font-family: 'ET Bembo';
+      src: url('../fonts/ETBembo-RomanOSF.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ET Bembo';
+      src: url('../fonts/ETBembo-SemiBoldOSF.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --canvas-bg: #f8f4ee;
+      --canvas-ink: #000000;
+      --canvas-accent: #000000;
+      --rule: #e4ddd3;
+      --serif: 'ET Bembo', Bembo, 'Times New Roman', Georgia, serif;
+    }
+
+    html[data-theme="dark"] {
+      --canvas-bg: #000000;
+      --canvas-ink: #ffffff;
+      --canvas-accent: #ffffff;
+      --rule: #232c4c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--canvas-bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--canvas-bg);
+      font-family: var(--serif);
+      color: var(--canvas-ink);
+      -webkit-font-smoothing: antialiased;
+      opacity: 0;
+      transition: background-color 0.25s ease, opacity 0.35s ease-in-out;
+    }
+
+    body.page-visible {
+      opacity: 1;
+    }
+
+    .list-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 140px 24px 120px;
+    }
+
+    .list-heading {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--canvas-ink);
+      text-decoration: none;
+      display: inline-block;
+      margin: 0 0 48px;
+    }
+
+    .list-heading:hover {
+      color: var(--canvas-accent);
+    }
+
+    .article-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .article-list li {
+      border-top: 1px solid var(--rule);
+    }
+
+    .article-list li:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .article-list a {
+      display: block;
+      padding: 26px 0;
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--canvas-ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .article-list a:hover {
+      color: var(--canvas-accent);
+    }
+
+    @media (max-width: 480px) {
+      .list-wrap {
+        padding: 100px 20px 80px;
+      }
+
+      .list-heading {
+        font-size: 26px;
+      }
+
+      .article-list a {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="list-wrap">
+    <a class="list-heading" href="../">Global Maxima</a>
+    <ul class="article-list">
+      <li><a href="../the-two-subcultures/">The Two Subcultures</a></li>
+    </ul>
+  </div>
+
+  <script>
+    (function () {
+      requestAnimationFrame(function () {
+        document.body.classList.add('page-visible');
+      });
+
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          document.body.classList.add('page-visible');
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var link = e.target.closest('a');
+        if (!link || (link.target && link.target !== '_self')) return;
+        var url;
+        try { url = new URL(link.href, location.href); } catch (err) { return; }
+        if (url.origin !== location.origin) return;
+        if (url.pathname === location.pathname && url.hash) return;
+        e.preventDefault();
+        document.body.classList.remove('page-visible');
+        setTimeout(function () {
+          location.href = link.href;
+        }, 350);
+      });
+    })();
+  </script>
+</body>
+</html>
