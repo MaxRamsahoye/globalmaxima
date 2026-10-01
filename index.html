@@ -143,30 +143,17 @@
       pointer-events: none;
     }
 
-    .loadscreen-text,
-    .loadscreen-cursor {
+    .loadscreen-text {
       font-family: var(--serif);
-      font-size: 46px;
+      font-size: 64px;
       font-weight: 600;
       letter-spacing: -0.02em;
       color: var(--canvas-ink);
     }
 
-    .loadscreen-cursor {
-      margin-left: 2px;
-      animation: loadscreen-blink 0.8s steps(1) infinite;
-    }
-
-    @keyframes loadscreen-blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
     @media (max-width: 480px) {
-      .loadscreen-text,
-      .loadscreen-cursor {
-        font-size: 32px;
+      .loadscreen-text {
+        font-size: 42px;
       }
     }
 
@@ -491,17 +478,28 @@
 </head>
 <body>
   <div class="loadscreen" id="loadscreen">
-    <span class="loadscreen-text"></span><span class="loadscreen-cursor">|</span>
+    <span class="loadscreen-text"></span>
   </div>
   <script>
     (function () {
       var loadscreen = document.getElementById('loadscreen');
+
+      var isReload = false;
+      try {
+        var navEntries = performance.getEntriesByType('navigation');
+        if (navEntries && navEntries.length) {
+          isReload = navEntries[0].type === 'reload';
+        } else if (performance.navigation) {
+          isReload = performance.navigation.type === 1;
+        }
+      } catch (e) {}
+
       var cameFromThisSite = false;
       try {
         cameFromThisSite = document.referrer && new URL(document.referrer).origin === location.origin;
       } catch (e) {}
 
-      if (cameFromThisSite) {
+      if (cameFromThisSite && !isReload) {
         if (loadscreen.parentNode) loadscreen.parentNode.removeChild(loadscreen);
         return;
       }
@@ -514,7 +512,7 @@
         if (i <= fullText.length) {
           textEl.textContent = fullText.slice(0, i);
           i++;
-          setTimeout(typeNext, 70);
+          setTimeout(typeNext, 140);
         } else {
           setTimeout(function () {
             loadscreen.classList.add('loadscreen-hidden');
