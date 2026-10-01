@@ -127,36 +127,6 @@
       }
     }
 
-    .loadscreen {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--canvas-bg);
-      transition: opacity 0.4s ease;
-    }
-
-    .loadscreen.loadscreen-hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loadscreen-text {
-      font-family: var(--serif);
-      font-size: 64px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--canvas-ink);
-    }
-
-    @media (max-width: 480px) {
-      .loadscreen-text {
-        font-size: 42px;
-      }
-    }
-
     html {
       background: var(--canvas-bg);
       scroll-behavior: smooth;
@@ -205,6 +175,12 @@
       padding: 0;
       cursor: pointer;
       color: var(--canvas-ink);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .theme-toggle.visible {
+      opacity: 1;
     }
 
     .theme-toggle:hover {
@@ -314,7 +290,16 @@
     .library-grid {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 180px 40px 100px;
+      padding: 120px 40px 100px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px var(--edge-margin);
     }
 
     .brand {
@@ -322,12 +307,12 @@
       flex-direction: column;
       gap: 14px;
       max-width: 860px;
-      margin: 0 auto 80px;
+      width: 100%;
     }
 
     .site-title {
       font-family: var(--serif);
-      font-size: 58px;
+      font-size: 64px;
       letter-spacing: -0.02em;
       color: var(--canvas-ink);
       text-decoration: none;
@@ -337,6 +322,17 @@
 
     .site-title:hover {
       color: var(--canvas-accent);
+    }
+
+    .site-quote,
+    .site-description {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .site-quote.visible,
+    .site-description.visible {
+      opacity: 1;
     }
 
     .site-quote {
@@ -362,6 +358,39 @@
 
     .site-description a:hover {
       border-bottom-color: var(--canvas-ink);
+    }
+
+    .scroll-down-btn {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--canvas-accent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .scroll-down-btn.visible {
+      opacity: 1;
+    }
+
+    .scroll-down-btn:hover {
+      color: var(--canvas-ink);
+    }
+
+    .scroll-down-btn svg {
+      width: 18px;
+      height: 18px;
+      transform: rotate(180deg);
     }
 
     .article-grid {
@@ -452,7 +481,7 @@
       }
 
       .site-title {
-        font-size: 44px;
+        font-size: 48px;
       }
 
       .site-quote {
@@ -464,11 +493,11 @@
       }
 
       .library-grid {
-        padding: 140px 24px 80px;
+        padding: 100px 24px 80px;
       }
 
-      .brand {
-        margin-bottom: 50px;
+      .scroll-down-btn {
+        bottom: 32px;
       }
 
       .article-card {
@@ -483,7 +512,7 @@
 
     @media (max-width: 480px) {
       .site-title {
-        font-size: 34px;
+        font-size: 42px;
       }
 
       .site-quote {
@@ -493,56 +522,6 @@
   </style>
 </head>
 <body>
-  <div class="loadscreen" id="loadscreen">
-    <span class="loadscreen-text"></span>
-  </div>
-  <script>
-    (function () {
-      var loadscreen = document.getElementById('loadscreen');
-
-      var isReload = false;
-      try {
-        var navEntries = performance.getEntriesByType('navigation');
-        if (navEntries && navEntries.length) {
-          isReload = navEntries[0].type === 'reload';
-        } else if (performance.navigation) {
-          isReload = performance.navigation.type === 1;
-        }
-      } catch (e) {}
-
-      var cameFromThisSite = false;
-      try {
-        cameFromThisSite = document.referrer && new URL(document.referrer).origin === location.origin;
-      } catch (e) {}
-
-      if (cameFromThisSite && !isReload) {
-        if (loadscreen.parentNode) loadscreen.parentNode.removeChild(loadscreen);
-        return;
-      }
-
-      var textEl = loadscreen.querySelector('.loadscreen-text');
-      var fullText = 'Global Maxima';
-      var i = 0;
-
-      function typeNext() {
-        if (i <= fullText.length) {
-          textEl.textContent = fullText.slice(0, i);
-          i++;
-          setTimeout(typeNext, 140);
-        } else {
-          setTimeout(function () {
-            loadscreen.classList.add('loadscreen-hidden');
-            setTimeout(function () {
-              if (loadscreen.parentNode) loadscreen.parentNode.removeChild(loadscreen);
-            }, 400);
-          }, 250);
-        }
-      }
-
-      typeNext();
-    })();
-  </script>
-
   <div class="page">
     <button class="theme-toggle" type="button" aria-label="Toggle theme">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
@@ -583,13 +562,22 @@
       </svg>
     </button>
 
-    <div class="library-grid">
+    <section class="hero">
       <div class="brand">
         <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
-        <a class="site-title" href="./">Global Maxima</a>
+        <a class="site-title" href="./"><span class="hero-title-text"></span></a>
         <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by <a href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>.</p>
       </div>
 
+      <button class="scroll-down-btn" type="button" aria-label="Scroll to articles">
+        <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
+          <polygon points="3,23 13,16.5 23,23 13,3"/>
+          <line x1="13" y1="16.5" x2="13" y2="3"/>
+        </svg>
+      </button>
+    </section>
+
+    <div class="library-grid">
       <div class="article-grid">
         <a class="article-card" href="the-two-subcultures/">
           <h2 class="card-title">The Two Subcultures</h2>
@@ -613,6 +601,64 @@
           document.body.classList.add('page-visible');
         }
       });
+
+      (function () {
+        var titleText = document.querySelector('.hero-title-text');
+        var quote = document.querySelector('.site-quote');
+        var desc = document.querySelector('.site-description');
+        var themeToggleEl = document.querySelector('.theme-toggle');
+        var scrollDownBtn = document.querySelector('.scroll-down-btn');
+
+        var isReload = false;
+        try {
+          var navEntries = performance.getEntriesByType('navigation');
+          if (navEntries && navEntries.length) {
+            isReload = navEntries[0].type === 'reload';
+          } else if (performance.navigation) {
+            isReload = performance.navigation.type === 1;
+          }
+        } catch (e) {}
+
+        var cameFromThisSite = false;
+        try {
+          cameFromThisSite = document.referrer && new URL(document.referrer).origin === location.origin;
+        } catch (e) {}
+
+        var shouldAnimate = !cameFromThisSite || isReload;
+
+        if (!shouldAnimate) {
+          titleText.textContent = 'Global Maxima';
+          quote.classList.add('visible');
+          desc.classList.add('visible');
+          themeToggleEl.classList.add('visible');
+          scrollDownBtn.classList.add('visible');
+          return;
+        }
+
+        var fullText = 'Global Maxima';
+        var i = 0;
+
+        function typeNext() {
+          if (i <= fullText.length) {
+            titleText.textContent = fullText.slice(0, i);
+            i++;
+            setTimeout(typeNext, 140);
+          } else {
+            setTimeout(function () {
+              quote.classList.add('visible');
+              desc.classList.add('visible');
+            }, 300);
+            setTimeout(function () {
+              themeToggleEl.classList.add('visible');
+            }, 600);
+            setTimeout(function () {
+              scrollDownBtn.classList.add('visible');
+            }, 900);
+          }
+        }
+
+        typeNext();
+      })();
 
       document.addEventListener('click', function (e) {
         if (e.defaultPrevented || e.button !== 0) return;
@@ -662,6 +708,15 @@
       btn.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      var scrollDownBtn = document.querySelector('.scroll-down-btn');
+      var libraryGrid = document.querySelector('.library-grid');
+
+      if (scrollDownBtn && libraryGrid) {
+        scrollDownBtn.addEventListener('click', function () {
+          libraryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
 
       var themeToggle = document.querySelector('.theme-toggle');
       var root = document.documentElement;
