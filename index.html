@@ -313,6 +313,8 @@
     .brand {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
       gap: 14px;
       max-width: 860px;
       width: 100%;
@@ -383,6 +385,7 @@
     .scroll-down-btn {
       position: absolute;
       bottom: 90px;
+      top: auto;
       left: 50%;
       transform: translateX(-50%);
       width: 34px;
@@ -514,10 +517,6 @@
 
       .library-grid {
         padding: 100px 24px 80px;
-      }
-
-      .scroll-down-btn {
-        bottom: 60px;
       }
 
       .article-card {
@@ -730,13 +729,7 @@
       window.addEventListener('resize', update);
       update();
 
-      function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      btn.addEventListener('click', scrollToTop);
-
-      var scrollDownBtn = document.querySelector('.scroll-down-btn');
+      var SCROLL_DURATION = 900;
 
       function easeInOutQuad(t) {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
@@ -757,9 +750,17 @@
         requestAnimationFrame(step);
       }
 
+      function scrollToTop() {
+        animateScrollTo(0, SCROLL_DURATION);
+      }
+
+      btn.addEventListener('click', scrollToTop);
+
+      var scrollDownBtn = document.querySelector('.scroll-down-btn');
+
       function scrollToLibrary() {
         setTimeout(function () {
-          animateScrollTo(libraryGrid.offsetTop, 1400);
+          animateScrollTo(libraryGrid.offsetTop, SCROLL_DURATION);
         }, 300);
       }
 
@@ -772,6 +773,29 @@
           scrollToLibrary();
         });
       }
+
+      var hero = document.querySelector('.hero');
+      var siteDescription = document.querySelector('.site-description');
+
+      function positionScrollDownBtn() {
+        if (!hero || !siteDescription || !scrollDownBtn) return;
+        var heroRect = hero.getBoundingClientRect();
+        var descBottom = siteDescription.getBoundingClientRect().bottom - heroRect.top;
+        var midpoint = (descBottom + heroRect.height) / 2;
+        scrollDownBtn.style.top = (midpoint - scrollDownBtn.offsetHeight / 2) + 'px';
+        scrollDownBtn.style.bottom = 'auto';
+      }
+
+      positionScrollDownBtn();
+      window.addEventListener('resize', positionScrollDownBtn);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(positionScrollDownBtn);
+          });
+        });
+      }
+      setTimeout(positionScrollDownBtn, 1000);
 
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Backspace') return;
