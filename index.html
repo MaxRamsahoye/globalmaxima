@@ -420,6 +420,16 @@
 
     .scroll-down-btn.visible {
       opacity: 1;
+      animation: scroll-down-bob 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scroll-down-bob {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
     }
 
     .scroll-down-btn:hover {
@@ -812,8 +822,8 @@
         if (!hero || !siteDescription || !scrollDownBtn) return;
         var heroRect = hero.getBoundingClientRect();
         var descBottom = siteDescription.getBoundingClientRect().bottom - heroRect.top;
-        var midpoint = (descBottom + heroRect.height) / 2;
-        scrollDownBtn.style.top = (midpoint - scrollDownBtn.offsetHeight / 2) + 'px';
+        var twoThirdsPoint = descBottom + (heroRect.height - descBottom) * (2 / 3);
+        scrollDownBtn.style.top = (twoThirdsPoint - scrollDownBtn.offsetHeight / 2) + 'px';
         scrollDownBtn.style.bottom = 'auto';
       }
 
