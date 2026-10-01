@@ -496,6 +496,16 @@
   <script>
     (function () {
       var loadscreen = document.getElementById('loadscreen');
+      var cameFromThisSite = false;
+      try {
+        cameFromThisSite = document.referrer && new URL(document.referrer).origin === location.origin;
+      } catch (e) {}
+
+      if (cameFromThisSite) {
+        if (loadscreen.parentNode) loadscreen.parentNode.removeChild(loadscreen);
+        return;
+      }
+
       var textEl = loadscreen.querySelector('.loadscreen-text');
       var fullText = 'Global Maxima';
       var i = 0;
