@@ -725,6 +725,7 @@
       var btn = document.querySelector('.scroll-top-btn');
       var libraryGrid = document.querySelector('.library-grid');
       var scrollDownBtn = document.querySelector('.scroll-down-btn');
+      var reachedEnd = false;
 
       function update() {
         var doc = document.documentElement;
@@ -733,6 +734,9 @@
         var CANVAS_TOP = libraryGrid.offsetTop;
         var canvasScrollable = scrollable - CANVAS_TOP;
         var pct = canvasScrollable > 0 ? Math.min(100, Math.max(0, ((scrollTop - CANVAS_TOP) / canvasScrollable) * 100)) : 0;
+        if (canvasScrollable > 0 && scrollTop >= scrollable - 1) {
+          pct = 100;
+        }
 
         var topInset = Math.max(0, CANVAS_TOP - scrollTop);
         var trackHeight = window.innerHeight - topInset;
@@ -741,6 +745,13 @@
         track.style.height = trackHeight + 'px';
         fill.style.top = topInset + 'px';
         fill.style.height = (pct / 100 * trackHeight) + 'px';
+
+        if (pct >= 100 && !reachedEnd) {
+          reachedEnd = true;
+          playCompletionSound();
+        } else if (pct < 100 && reachedEnd) {
+          reachedEnd = false;
+        }
 
         var downArrowPassed = scrollDownBtn ? scrollDownBtn.getBoundingClientRect().bottom < 0 : pct > 20;
         btn.classList.toggle('visible', downArrowPassed);
@@ -921,6 +932,32 @@
       }
 
       document.addEventListener('click', playPianoClick);
+
+      function playCompletionSound() {
+        try {
+          if (!audioCtx) {
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            audioCtx = new AC();
+          }
+          if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+          var now = audioCtx.currentTime;
+          var notes = [523.25, 783.99];
+          notes.forEach(function (freq, idx) {
+            var startTime = now + idx * 0.09;
+            var osc = audioCtx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            var gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.09, startTime + 0.006);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.35);
+            osc.connect(gain).connect(audioCtx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + 0.35);
+          });
+        } catch (e) {}
+      }
 
       function spawnRipple(x, y, color) {
         var ripple = document.createElement('div');
