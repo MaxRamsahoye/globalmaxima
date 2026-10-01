@@ -320,7 +320,7 @@
 
     .site-title {
       font-family: var(--serif);
-      font-size: 64px;
+      font-size: 72px;
       letter-spacing: -0.02em;
       color: var(--canvas-ink);
       text-decoration: none;
@@ -346,13 +346,13 @@
     .site-quote {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 23px;
+      font-size: 26px;
       color: var(--canvas-accent);
     }
 
     .site-description {
       font-family: var(--serif);
-      font-size: 22px;
+      font-size: 25px;
       line-height: 1.4;
       color: var(--canvas-ink);
       margin: 0;
@@ -437,7 +437,7 @@
     .card-title {
       font-family: var(--serif);
       font-weight: 600;
-      font-size: 34px;
+      font-size: 38px;
       line-height: 1.15;
       color: var(--canvas-ink);
       margin: 0 0 8px;
@@ -446,14 +446,14 @@
     .card-subtitle {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 19px;
+      font-size: 21px;
       color: var(--canvas-accent);
       margin: 0 0 24px;
     }
 
     .card-desc {
       font-family: var(--serif);
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.5;
       color: var(--canvas-ink);
       margin: 0;
@@ -489,15 +489,15 @@
       }
 
       .site-title {
-        font-size: 48px;
+        font-size: 54px;
       }
 
       .site-quote {
-        font-size: 19px;
+        font-size: 21px;
       }
 
       .site-description {
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .library-grid {
@@ -520,11 +520,11 @@
 
     @media (max-width: 480px) {
       .site-title {
-        font-size: 42px;
+        font-size: 46px;
       }
 
       .site-quote {
-        font-size: 17px;
+        font-size: 19px;
       }
     }
   </style>
@@ -572,7 +572,7 @@
 
     <section class="hero">
       <div class="brand">
-        <span class="site-quote">&ldquo;We live in the interregnum between worlds, between paradigms&rdquo;</span>
+        <span class="site-quote">&ldquo;&nbsp;We live in the interregnum between worlds, between paradigms&rdquo;</span>
         <a class="site-title" href="./"><span class="hero-title-text"></span></a>
         <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by <a href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>.</p>
       </div>
@@ -721,8 +721,29 @@
 
       var scrollDownBtn = document.querySelector('.scroll-down-btn');
 
+      function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      }
+
+      function animateScrollTo(targetY, duration) {
+        var startY = window.scrollY;
+        var distance = targetY - startY;
+        var startTime = null;
+
+        function step(timestamp) {
+          if (startTime === null) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          window.scrollTo({ top: startY + distance * easeInOutQuad(progress), behavior: 'instant' });
+          if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+      }
+
       function scrollToLibrary() {
-        libraryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(function () {
+          animateScrollTo(libraryGrid.offsetTop, 1400);
+        }, 300);
       }
 
       if (scrollDownBtn && libraryGrid) {
