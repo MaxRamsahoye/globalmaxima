@@ -362,11 +362,10 @@
 
     .site-credit {
       position: fixed;
-      bottom: 30px;
       left: var(--edge-margin);
       z-index: 50;
       font-family: var(--serif);
-      font-size: 16px;
+      font-size: 20px;
       color: var(--canvas-ink);
       text-decoration: none;
       border-bottom: 1px solid transparent;
@@ -374,12 +373,28 @@
       transition: opacity 0.9s ease;
     }
 
-    .site-credit.visible {
+    .site-credit:hover {
+      border-bottom-color: var(--canvas-ink);
+    }
+
+    .site-credit-top {
+      top: 40px;
+    }
+
+    .site-credit-bottom {
+      bottom: 30px;
+    }
+
+    .site-credit-top.visible {
       opacity: 1;
     }
 
-    .site-credit:hover {
-      border-bottom-color: var(--canvas-ink);
+    body.past-frame .site-credit-top.visible {
+      opacity: 0;
+    }
+
+    body.past-frame .site-credit-bottom.visible {
+      opacity: 1;
     }
 
     .scroll-down-btn {
@@ -494,6 +509,10 @@
         top: 24px;
       }
 
+      .site-credit-top {
+        top: 24px;
+      }
+
       .scroll-progress-track,
       .scroll-progress-fill {
         top: 80px;
@@ -588,7 +607,7 @@
         <p class="site-description">A collection of writings on civilisation, AI and the metacrisis.</p>
       </div>
 
-      <a class="site-credit" href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>
+      <a class="site-credit site-credit-top" href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>
 
       <button class="scroll-down-btn" type="button" aria-label="Scroll to articles">
         <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
@@ -597,6 +616,8 @@
         </svg>
       </button>
     </section>
+
+    <a class="site-credit site-credit-bottom" href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>
 
     <div class="library-grid">
       <div class="article-grid">
@@ -629,7 +650,7 @@
         var desc = document.querySelector('.site-description');
         var themeToggleEl = document.querySelector('.theme-toggle');
         var scrollDownBtn = document.querySelector('.scroll-down-btn');
-        var siteCredit = document.querySelector('.site-credit');
+        var siteCredits = document.querySelectorAll('.site-credit');
 
         var isReload = false;
         try {
@@ -654,7 +675,7 @@
           desc.classList.add('visible');
           themeToggleEl.classList.add('visible');
           scrollDownBtn.classList.add('visible');
-          siteCredit.classList.add('visible');
+          siteCredits.forEach(function (el) { el.classList.add('visible'); });
           return;
         }
 
@@ -673,11 +694,9 @@
             }, 900);
             setTimeout(function () {
               themeToggleEl.classList.add('visible');
-              siteCredit.classList.add('visible');
-            }, 1800);
-            setTimeout(function () {
               scrollDownBtn.classList.add('visible');
-            }, 2700);
+              siteCredits.forEach(function (el) { el.classList.add('visible'); });
+            }, 1800);
           }
         }
 
@@ -704,6 +723,7 @@
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
       var libraryGrid = document.querySelector('.library-grid');
+      var scrollDownBtn = document.querySelector('.scroll-down-btn');
 
       function update() {
         var doc = document.documentElement;
@@ -721,7 +741,8 @@
         fill.style.top = topInset + 'px';
         fill.style.height = (pct / 100 * trackHeight) + 'px';
 
-        btn.classList.toggle('visible', pct > 20);
+        var downArrowPassed = scrollDownBtn ? scrollDownBtn.getBoundingClientRect().bottom < 0 : pct > 20;
+        btn.classList.toggle('visible', downArrowPassed);
         document.body.classList.toggle('past-frame', scrollTop > CANVAS_TOP);
       }
 
@@ -755,8 +776,6 @@
       }
 
       btn.addEventListener('click', scrollToTop);
-
-      var scrollDownBtn = document.querySelector('.scroll-down-btn');
 
       function scrollToLibrary() {
         setTimeout(function () {
