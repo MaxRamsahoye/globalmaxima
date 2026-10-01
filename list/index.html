@@ -109,12 +109,12 @@
       color: var(--canvas-ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
-      transition: background-color 0.25s ease, opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.25s ease, opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.page-visible {
       opacity: 1;
-      transition: background-color 0.25s ease, opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.25s ease, opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .list-wrap {
@@ -236,7 +236,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 500);
+        }, 800);
       });
 
       var backArrow = document.querySelector('.back-arrow');
@@ -252,7 +252,7 @@
           } else {
             location.href = backArrow.getAttribute('href');
           }
-        }, 500);
+        }, 800);
       }
 
       backArrow.addEventListener('click', function (e) {

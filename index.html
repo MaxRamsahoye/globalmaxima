@@ -153,12 +153,12 @@
       color: var(--canvas-ink);
       -webkit-font-smoothing: antialiased;
       opacity: 0;
-      transition: background-color 0.25s ease, opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.25s ease, opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.page-visible {
       opacity: 1;
-      transition: background-color 0.25s ease, opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.25s ease, opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .page {
@@ -263,7 +263,7 @@
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
-      right: calc(var(--edge-margin) + 40px);
+      right: var(--edge-margin);
       width: 34px;
       height: 34px;
       display: flex;
@@ -358,13 +358,25 @@
       margin: 0;
     }
 
-    .site-description a {
-      color: inherit;
+    .site-credit {
+      position: fixed;
+      bottom: 30px;
+      left: var(--edge-margin);
+      z-index: 50;
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--canvas-ink);
       text-decoration: none;
       border-bottom: 1px solid transparent;
+      opacity: 0;
+      transition: opacity 0.9s ease;
     }
 
-    .site-description a:hover {
+    .site-credit.visible {
+      opacity: 1;
+    }
+
+    .site-credit:hover {
       border-bottom-color: var(--canvas-ink);
     }
 
@@ -574,8 +586,10 @@
       <div class="brand">
         <span class="site-quote">&ldquo;&nbsp;We live in the interregnum between worlds, between paradigms&rdquo;</span>
         <a class="site-title" href="./"><span class="hero-title-text"></span></a>
-        <p class="site-description">A collection of writings on civilisation, AI and the metacrisis by <a href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>.</p>
+        <p class="site-description">A collection of writings on civilisation, AI and the metacrisis.</p>
       </div>
+
+      <a class="site-credit" href="https://maxramsahoye.github.io/max/" target="_blank" rel="noopener">Max Ramsahoye</a>
 
       <button class="scroll-down-btn" type="button" aria-label="Scroll to articles">
         <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7">
@@ -616,6 +630,7 @@
         var desc = document.querySelector('.site-description');
         var themeToggleEl = document.querySelector('.theme-toggle');
         var scrollDownBtn = document.querySelector('.scroll-down-btn');
+        var siteCredit = document.querySelector('.site-credit');
 
         var isReload = false;
         try {
@@ -640,6 +655,7 @@
           desc.classList.add('visible');
           themeToggleEl.classList.add('visible');
           scrollDownBtn.classList.add('visible');
+          siteCredit.classList.add('visible');
           return;
         }
 
@@ -658,6 +674,7 @@
             }, 900);
             setTimeout(function () {
               themeToggleEl.classList.add('visible');
+              siteCredit.classList.add('visible');
             }, 1800);
             setTimeout(function () {
               scrollDownBtn.classList.add('visible');
@@ -681,7 +698,7 @@
         document.body.classList.remove('page-visible');
         setTimeout(function () {
           location.href = link.href;
-        }, 500);
+        }, 800);
       });
 
       var track = document.querySelector('.scroll-progress-track');
