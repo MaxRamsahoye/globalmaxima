@@ -93,6 +93,49 @@
       }
     }
 
+    .loadscreen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--canvas-bg);
+      transition: opacity 0.4s ease;
+    }
+
+    .loadscreen.loadscreen-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loadscreen-text,
+    .loadscreen-cursor {
+      font-family: var(--serif);
+      font-size: 46px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--canvas-ink);
+    }
+
+    .loadscreen-cursor {
+      margin-left: 2px;
+      animation: loadscreen-blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes loadscreen-blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .loadscreen-text,
+      .loadscreen-cursor {
+        font-size: 32px;
+      }
+    }
+
     html {
       background: var(--canvas-bg);
       scroll-behavior: smooth;
@@ -196,6 +239,35 @@
   </style>
 </head>
 <body>
+  <div class="loadscreen" id="loadscreen">
+    <span class="loadscreen-text"></span><span class="loadscreen-cursor">|</span>
+  </div>
+  <script>
+    (function () {
+      var loadscreen = document.getElementById('loadscreen');
+      var textEl = loadscreen.querySelector('.loadscreen-text');
+      var fullText = 'Global Maxima';
+      var i = 0;
+
+      function typeNext() {
+        if (i <= fullText.length) {
+          textEl.textContent = fullText.slice(0, i);
+          i++;
+          setTimeout(typeNext, 70);
+        } else {
+          setTimeout(function () {
+            loadscreen.classList.add('loadscreen-hidden');
+            setTimeout(function () {
+              if (loadscreen.parentNode) loadscreen.parentNode.removeChild(loadscreen);
+            }, 400);
+          }, 250);
+        }
+      }
+
+      typeNext();
+    })();
+  </script>
+
   <a class="back-arrow" href="../" aria-label="Back">
     <svg viewBox="0 0 26 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter">
       <path d="M10,1.5 L5,6 L18,6 A4,4 0 0 1 18,14 L1,14"/>
