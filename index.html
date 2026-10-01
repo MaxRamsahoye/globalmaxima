@@ -10,6 +10,12 @@
   <script>
     (function () {
       try {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+      } catch (e) {}
+      try {
         var t = localStorage.getItem('theme');
         if (t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
@@ -25,7 +31,8 @@
   <title>Library — Global Maxima</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet"></noscript>
   <style>
     @font-face {
       font-family: 'ET Bembo';
@@ -225,8 +232,8 @@
     .scroll-progress-track {
       position: fixed;
       top: 100px;
-      right: var(--edge-margin);
-      width: 12px;
+      right: 0;
+      width: 8px;
       height: calc(100vh - 100px);
       border-radius: 0;
       background: var(--canvas-track-tint);
@@ -238,8 +245,8 @@
     .scroll-progress-fill {
       position: fixed;
       top: 100px;
-      right: var(--edge-margin);
-      width: 12px;
+      right: 0;
+      width: 8px;
       height: 0px;
       border-radius: 0;
       background: var(--canvas-accent);
@@ -719,7 +726,13 @@
       }
 
       if (scrollDownBtn && libraryGrid) {
-        scrollDownBtn.addEventListener('click', scrollToLibrary);
+        scrollDownBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          playPianoClick();
+          var rect = scrollDownBtn.getBoundingClientRect();
+          spawnRipple(rect.left + rect.width / 2, rect.top + rect.height / 2, getComputedStyle(scrollDownBtn).color);
+          scrollToLibrary();
+        });
       }
 
       document.addEventListener('keydown', function (e) {
