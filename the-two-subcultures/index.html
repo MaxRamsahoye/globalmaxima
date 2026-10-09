@@ -69,6 +69,7 @@
       --canvas-accent: #000000;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --selection-bg: rgba(186, 220, 240, 0.45);
+      --note-highlight: #dbe9f3;
       --rule: #e4ddd3;
       --frame-margin: 100px;
       --header-margin: 100px;
@@ -88,6 +89,7 @@
       --canvas-accent: #8a6d42;
       --canvas-track-tint: rgba(0, 0, 0, 0.08);
       --selection-bg: rgba(214, 196, 160, 0.4);
+      --note-highlight: #eae1cf;
       --rule: #e4ddd3;
     }
 
@@ -100,6 +102,7 @@
       --canvas-accent: #9fb0d9;
       --canvas-track-tint: rgba(255, 255, 255, 0.15);
       --selection-bg: rgba(180, 205, 235, 0.35);
+      --note-highlight: #3f4852;
       --rule: #232c4c;
     }
 
@@ -112,6 +115,7 @@
       --canvas-accent: #ffffff;
       --canvas-track-tint: rgba(255, 255, 255, 0.15);
       --selection-bg: rgba(180, 205, 235, 0.35);
+      --note-highlight: #3f4852;
       --rule: #232c4c;
     }
 
@@ -514,8 +518,42 @@
       opacity: 1;
     }
 
+    .sidenote {
+      position: relative;
+      z-index: 0;
+    }
+
+    .sidenote::after {
+      content: '';
+      position: absolute;
+      inset: -8px -10px;
+      background: var(--note-highlight);
+      border-radius: 6px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .sidenote.note-active::after {
+      opacity: 1;
+    }
+
+    .note-anchor {
+      padding: 0.08em 0;
+      border-radius: 4px;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .note-anchor.note-active {
+      background-color: var(--note-highlight);
+      box-shadow: 4px 0 0 var(--note-highlight), -4px 0 0 var(--note-highlight);
+    }
+
     .sidenote-label {
       display: block;
+      width: fit-content;
       font-style: normal;
       font-size: 11px;
       letter-spacing: 0.1em;
@@ -545,6 +583,15 @@
 
     .sidenote-ref:hover {
       color: var(--canvas-ink);
+    }
+
+    .sidenote-ref.note-active,
+    .sidenote-label.note-active {
+      color: var(--canvas-ink);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
     }
 
     .sidenote-ref::before {
@@ -927,6 +974,93 @@
       sidenotes.forEach(function (el, i) {
         var label = el.querySelector('.sidenote-label');
         if (label) label.setAttribute('data-num', i + 1);
+      });
+
+      function findSentenceStart(textBefore) {
+        var boundary = /[.!?]+["'’”)\]]*\s+/g;
+        var start = 0;
+        var m;
+        while ((m = boundary.exec(textBefore))) {
+          var wordBefore = textBefore.slice(0, m.index).match(/(\S+)$/);
+          var word = wordBefore ? wordBefore[1] : '';
+          if (/^(?:[A-Z]\.)*[A-Z]$/.test(word)) continue;
+          if (/^(?:e\.g|i\.e|etc|vs|cf|Mr|Mrs|Ms|Dr|St)$/i.test(word)) continue;
+          start = m.index + m[0].length;
+        }
+        return start;
+      }
+
+      function wrapAnchorSentence(ref, noteNum) {
+        var block = ref.closest('p, li');
+        if (!block) return;
+        var before = document.createRange();
+        before.setStart(block, 0);
+        before.setEndBefore(ref);
+        var offset = findSentenceStart(before.toString());
+
+        var walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+        var node;
+        var startNode = null;
+        var startOffset = 0;
+        while ((node = walker.nextNode())) {
+          if (node.compareDocumentPosition(ref) & Node.DOCUMENT_POSITION_PRECEDING) break;
+          if (offset <= node.length) {
+            startNode = node;
+            startOffset = offset;
+            break;
+          }
+          offset -= node.length;
+        }
+        if (!startNode) return;
+
+        var range = document.createRange();
+        if (startNode.parentNode === block) {
+          range.setStart(startNode, startOffset);
+        } else {
+          var top = startNode;
+          while (top.parentNode !== block) top = top.parentNode;
+          range.setStartBefore(top);
+        }
+        range.setEndAfter(ref);
+
+        var span = document.createElement('span');
+        span.className = 'note-anchor';
+        span.setAttribute('data-note', noteNum);
+        try {
+          range.surroundContents(span);
+        } catch (err) {}
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll('.sidenote-ref'), function (ref) {
+        wrapAnchorSentence(ref, ref.id.replace('ref-', ''));
+      });
+
+      function noteParts(num) {
+        var note = document.getElementById('note-' + num);
+        return [
+          document.getElementById('ref-' + num),
+          note,
+          note && note.querySelector('.sidenote-label'),
+          document.querySelector('.note-anchor[data-note="' + num + '"]')
+        ].filter(Boolean);
+      }
+
+      function setNoteActive(num, on) {
+        noteParts(num).forEach(function (el) {
+          el.classList.toggle('note-active', on);
+        });
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll('.sidenote-ref, .sidenote-label'), function (el) {
+        var num = el.classList.contains('sidenote-ref')
+          ? el.id.replace('ref-', '')
+          : el.getAttribute('href').replace('#ref-', '');
+        ['mouseenter', 'focus'].forEach(function (type) {
+          el.addEventListener(type, function () { setNoteActive(num, true); });
+        });
+        ['mouseleave', 'blur'].forEach(function (type) {
+          el.addEventListener(type, function () { setNoteActive(num, false); });
+        });
       });
 
       var endnotesQuery = window.matchMedia('(max-width: 960px)');
@@ -1330,7 +1464,7 @@
       }
 
       document.addEventListener('click', function (e) {
-        var iconBtn = e.target.closest('.theme-toggle, .hamburger-btn, .back-arrow, .scroll-top-btn, .scroll-down-btn');
+        var iconBtn = e.target.closest('.theme-toggle, .hamburger-btn, .back-arrow, .scroll-top-btn, .scroll-down-btn, .sidenote-ref, .sidenote-label');
         var x, y;
         if (iconBtn) {
           var rect = iconBtn.getBoundingClientRect();
