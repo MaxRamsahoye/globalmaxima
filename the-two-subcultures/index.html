@@ -514,7 +514,7 @@
       transition: opacity 0.4s ease;
     }
 
-    body.wide.reveal-ready .sidenote.ref-in-view {
+    body.wide.reveal-ready .sidenote.note-in-view {
       opacity: 1;
     }
 
@@ -1093,28 +1093,40 @@
         var sidenoteStaggerIndex = 0;
         var sidenoteStaggerResetTimer = null;
 
+        var refOnScreen = {};
+        var noteOnScreen = {};
+
+        function refreshNoteVisibility(num) {
+          var note = document.getElementById('note-' + num);
+          if (!note) return;
+          var show = !!(refOnScreen[num] && noteOnScreen[num]);
+          if (show === note.classList.contains('note-in-view')) return;
+          if (show) {
+            note.style.transitionDelay = (sidenoteStaggerIndex * 120) + 'ms';
+            sidenoteStaggerIndex++;
+            clearTimeout(sidenoteStaggerResetTimer);
+            sidenoteStaggerResetTimer = setTimeout(function () { sidenoteStaggerIndex = 0; }, 700);
+          } else {
+            note.style.transitionDelay = '0ms';
+          }
+          note.classList.toggle('note-in-view', show);
+        }
+
         var sidenoteObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            var note = document.getElementById(entry.target.id.replace('ref-', 'note-'));
-            if (!note) return;
-            if (entry.isIntersecting) {
-              note.style.transitionDelay = (sidenoteStaggerIndex * 120) + 'ms';
-              sidenoteStaggerIndex++;
-              clearTimeout(sidenoteStaggerResetTimer);
-              sidenoteStaggerResetTimer = setTimeout(function () { sidenoteStaggerIndex = 0; }, 700);
-            } else {
-              note.style.transitionDelay = '0ms';
-            }
-            note.classList.toggle('ref-in-view', entry.isIntersecting);
+            var isRef = entry.target.classList.contains('sidenote-ref');
+            var num = entry.target.id.replace(isRef ? 'ref-' : 'note-', '');
+            (isRef ? refOnScreen : noteOnScreen)[num] = entry.isIntersecting;
+            refreshNoteVisibility(num);
           });
         });
 
-        sidenoteRefs.forEach(function (ref) {
-          sidenoteObserver.observe(ref);
+        sidenoteRefs.concat(sidenotes).forEach(function (el) {
+          sidenoteObserver.observe(el);
         });
       } else {
         sidenotes.forEach(function (note) {
-          note.classList.add('ref-in-view');
+          note.classList.add('note-in-view');
         });
       }
 
