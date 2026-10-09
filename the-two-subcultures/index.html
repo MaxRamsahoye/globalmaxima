@@ -284,7 +284,7 @@
       position: fixed;
       top: 134px;
       right: var(--frame-margin);
-      width: 8px;
+      width: 5px;
       height: calc(100vh - 134px);
       border-radius: 0;
       background: var(--canvas-track-tint);
@@ -297,7 +297,7 @@
       position: fixed;
       top: 134px;
       right: var(--frame-margin);
-      width: 8px;
+      width: 5px;
       height: 0px;
       border-radius: 0;
       background: var(--canvas-accent);
@@ -389,7 +389,7 @@
 
     .toc li {
       counter-increment: toc-counter;
-      margin-bottom: 14px;
+      margin-bottom: 9px;
       font-size: 16px;
       line-height: 1.4;
     }
@@ -818,12 +818,7 @@
     <div class="layout-grid">
       <nav class="toc" aria-label="Contents">
         <p class="toc-label">The Two Subcultures</p>
-        <ol>
-          <li><a href="#sec-intro">Introduction</a></li>
-          <li><a href="#sec-subcultures">The two subcultures</a></li>
-          <li><a href="#sec-divergence">Convergence &amp; divergence</a></li>
-          <li><a href="#sec-ahead">What follows</a></li>
-        </ol>
+        <ol></ol>
       </nav>
 
       <main class="main-area">
@@ -904,6 +899,24 @@
           location.href = link.href;
         }, 800);
       });
+
+      var tocNav = document.querySelector('.toc');
+      var tocList = tocNav.querySelector('ol');
+      var tocItemCount = 0;
+      document.querySelectorAll('.article-body > section[id]').forEach(function (section) {
+        var heading = section.querySelector(':scope > h2, :scope > h3');
+        if (!heading) return;
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + section.id;
+        a.textContent = heading.textContent;
+        li.appendChild(a);
+        tocList.appendChild(li);
+        tocItemCount++;
+      });
+      if (tocItemCount === 0) {
+        tocNav.style.display = 'none';
+      }
 
       var endnotesContainer = document.getElementById('endnotes');
       var sidenotes = Array.prototype.slice.call(document.querySelectorAll('.sidenote'));
@@ -1065,10 +1078,12 @@
         requestAnimationFrame(step);
       }
 
+      function autoOpenCanvas() {
+        animateScrollTo(page.offsetTop + 10, 1100);
+      }
+
       if (!location.hash) {
-        setTimeout(function () {
-          animateScrollTo(page.offsetTop + 10, 1100);
-        }, 900);
+        setTimeout(autoOpenCanvas, 900);
       }
 
       function scrollToTop() {
@@ -1084,6 +1099,15 @@
         e.preventDefault();
         playPianoClick();
         scrollToTop();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        var tag = document.activeElement && document.activeElement.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'A' || tag === 'BUTTON' || (document.activeElement && document.activeElement.isContentEditable)) return;
+        e.preventDefault();
+        playPianoClick();
+        autoOpenCanvas();
       });
 
       var themeToggle = document.querySelector('.theme-toggle');
