@@ -1127,18 +1127,33 @@
               refOnScreen[num] = entry.isIntersecting;
             } else if (!entry.isIntersecting) {
               noteOnScreen[num] = false;
-            } else if (entry.intersectionRatio >= 0.5 ||
-                       (entry.rootBounds && entry.intersectionRect.height >= entry.rootBounds.height * 0.4)) {
-              // Only count a note as arrived once it is mostly in view, so it visibly fades in rather than at the edge.
-              noteOnScreen[num] = true;
             }
             refreshNoteVisibility(num);
           });
-        }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+          checkNotesArrival();
+        });
+
+        // A note only counts as arrived once all of it is on screen with clear space below it of half its height.
+        var checkNotesArrival = function () {
+          var viewportHeight = window.innerHeight;
+          sidenotes.forEach(function (note) {
+            var num = note.id.replace('note-', '');
+            if (noteOnScreen[num]) return;
+            var rect = note.getBoundingClientRect();
+            var needed = Math.min(rect.height * 1.5, viewportHeight * 0.75);
+            if (rect.top >= 0 && rect.top + needed <= viewportHeight) {
+              noteOnScreen[num] = true;
+              refreshNoteVisibility(num);
+            }
+          });
+        };
 
         sidenoteRefs.concat(sidenotes).forEach(function (el) {
           sidenoteObserver.observe(el);
         });
+        window.addEventListener('scroll', checkNotesArrival, { passive: true });
+        window.addEventListener('resize', checkNotesArrival);
+        checkNotesArrival();
       } else {
         sidenotes.forEach(function (note) {
           note.classList.add('note-in-view');
