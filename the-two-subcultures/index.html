@@ -167,7 +167,7 @@
       margin: 0;
       min-height: 100vh;
       background: var(--frame-bg);
-      padding: 175px var(--frame-margin) 0;
+      padding: 130px var(--frame-margin) 0;
       font-family: var(--serif);
       color: var(--frame-ink);
       -webkit-font-smoothing: antialiased;
@@ -184,7 +184,7 @@
       background: var(--canvas-bg);
       color: var(--canvas-ink);
       border-radius: 14px 14px 0 0;
-      min-height: calc(100vh - 175px);
+      min-height: calc(100vh - 130px);
     }
 
     .frame-header {
@@ -192,11 +192,11 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 175px;
+      height: 130px;
       display: flex;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 69px var(--header-margin) 0 0;
+      padding: 50px var(--header-margin) 0 0;
     }
 
     .site-title {
@@ -215,7 +215,7 @@
 
     .left-controls {
       position: absolute;
-      top: 79px;
+      top: 58px;
       left: var(--header-margin);
       z-index: 50;
       display: flex;
@@ -282,10 +282,10 @@
 
     .scroll-progress-track {
       position: fixed;
-      top: 179px;
+      top: 134px;
       right: var(--frame-margin);
       width: 8px;
-      height: calc(100vh - 179px);
+      height: calc(100vh - 134px);
       border-radius: 0;
       background: var(--canvas-track-tint);
       z-index: 40;
@@ -295,7 +295,7 @@
 
     .scroll-progress-fill {
       position: fixed;
-      top: 179px;
+      top: 134px;
       right: var(--frame-margin);
       width: 8px;
       height: 0px;
@@ -669,20 +669,20 @@
       }
 
       body {
-        padding-top: 150px;
+        padding-top: 110px;
       }
 
       .page {
-        min-height: calc(100vh - 150px);
+        min-height: calc(100vh - 110px);
       }
 
       .frame-header {
-        height: 150px;
-        padding-top: 51px;
+        height: 110px;
+        padding-top: 38px;
       }
 
       .left-controls {
-        top: 58px;
+        top: 43px;
       }
 
       .site-title {
@@ -720,20 +720,20 @@
       }
 
       body {
-        padding-top: 140px;
+        padding-top: 104px;
       }
 
       .page {
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 104px);
       }
 
       .frame-header {
-        height: 140px;
-        padding-top: 33px;
+        height: 104px;
+        padding-top: 25px;
       }
 
       .left-controls {
-        top: 38px;
+        top: 28px;
       }
 
       .site-title {
@@ -982,6 +982,12 @@
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
       update();
+
+      if (!location.hash) {
+        setTimeout(function () {
+          window.scrollTo({ top: 60, behavior: 'smooth' });
+        }, 900);
+      }
 
       function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
