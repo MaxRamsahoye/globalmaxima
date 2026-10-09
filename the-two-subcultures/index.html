@@ -363,13 +363,12 @@
       transform: translateX(-40px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
-    body.wide .toc {
+    body.wide .toc.toc-visible {
       opacity: 1;
       pointer-events: auto;
-      transition: opacity 0.4s ease 0.6s;
     }
 
     .toc-label {
@@ -508,12 +507,11 @@
       line-height: 1.5;
       color: var(--canvas-ink);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
-    body.wide .sidenote {
+    body.wide .sidenote.ref-in-view {
       opacity: 1;
-      transition: opacity 0.4s ease 0.6s;
     }
 
     .sidenote-label {
@@ -942,11 +940,48 @@
         setEndnotesMode(e.matches);
       });
 
+      if (window.IntersectionObserver) {
+        var sidenoteObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            var noteId = entry.target.id.replace('ref-', 'note-');
+            var note = document.getElementById(noteId);
+            if (note) {
+              note.classList.toggle('ref-in-view', entry.isIntersecting);
+            }
+          });
+        });
+
+        document.querySelectorAll('.sidenote-ref').forEach(function (ref) {
+          sidenoteObserver.observe(ref);
+        });
+      } else {
+        sidenotes.forEach(function (note) {
+          note.classList.add('ref-in-view');
+        });
+      }
+
       var track = document.querySelector('.scroll-progress-track');
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
       var page = document.querySelector('.page');
       var reachedEnd = false;
+      var wasWide = false;
+      var tocEl = document.querySelector('.toc');
+      var mainAreaEl = document.querySelector('.main-area');
+      var tocHideTimer = null;
+      var insideTocZone = false;
+
+      function showToc() {
+        clearTimeout(tocHideTimer);
+        tocEl.classList.add('toc-visible');
+      }
+
+      function scheduleTocAutoHide() {
+        clearTimeout(tocHideTimer);
+        tocHideTimer = setTimeout(function () {
+          if (!insideTocZone) tocEl.classList.remove('toc-visible');
+        }, 2000);
+      }
 
       function update() {
         var doc = document.documentElement;
@@ -978,13 +1013,38 @@
         }
 
         btn.classList.toggle('visible', pct > 20);
-        document.body.classList.toggle('wide', scrollTop > 10);
+        var isWide = scrollTop > 10;
+        document.body.classList.toggle('wide', isWide);
         document.body.classList.toggle('past-frame', scrollTop > CANVAS_TOP);
+
+        if (isWide && !wasWide) {
+          setTimeout(function () {
+            showToc();
+            scheduleTocAutoHide();
+          }, 600);
+        } else if (!isWide && wasWide) {
+          clearTimeout(tocHideTimer);
+          tocEl.classList.remove('toc-visible');
+        }
+        wasWide = isWide;
       }
 
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
       update();
+
+      document.addEventListener('mousemove', function (e) {
+        if (!document.body.classList.contains('wide')) return;
+        var mainLeft = mainAreaEl.getBoundingClientRect().left;
+        var nowInside = e.clientX < mainLeft;
+        if (nowInside && !insideTocZone) {
+          insideTocZone = true;
+          showToc();
+        } else if (!nowInside && insideTocZone) {
+          insideTocZone = false;
+          scheduleTocAutoHide();
+        }
+      });
 
       function easeInOutQuad(t) {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
