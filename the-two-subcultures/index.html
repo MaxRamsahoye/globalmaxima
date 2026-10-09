@@ -983,14 +983,33 @@
       window.addEventListener('resize', update);
       update();
 
+      function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      }
+
+      function animateScrollTo(targetY, duration) {
+        var startY = window.scrollY;
+        var distance = targetY - startY;
+        var startTime = null;
+
+        function step(timestamp) {
+          if (startTime === null) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          window.scrollTo({ top: startY + distance * easeInOutQuad(progress), behavior: 'instant' });
+          if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+      }
+
       if (!location.hash) {
         setTimeout(function () {
-          window.scrollTo({ top: page.offsetTop + 10, behavior: 'smooth' });
+          animateScrollTo(page.offsetTop + 10, 1100);
         }, 900);
       }
 
       function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        animateScrollTo(0, 900);
       }
 
       btn.addEventListener('click', scrollToTop);
