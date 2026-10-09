@@ -10,6 +10,12 @@
   <script>
     (function () {
       try {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        if (!location.hash) window.scrollTo(0, 0);
+      } catch (e) {}
+      try {
         var t = localStorage.getItem('theme');
         if (t === 'dark') {
           document.documentElement.setAttribute('data-theme', t);
@@ -294,7 +300,7 @@
       background: var(--canvas-track-tint);
       z-index: 40;
       opacity: 0;
-      transition: right 0.6s ease, opacity 0.3s ease;
+      transition: right 0.6s ease, opacity 0.6s ease;
     }
 
     .scroll-progress-fill {
@@ -307,7 +313,7 @@
       background: var(--canvas-accent);
       z-index: 41;
       opacity: 0;
-      transition: right 0.6s ease, opacity 0.3s ease;
+      transition: right 0.6s ease, opacity 0.6s ease;
     }
 
     body.past-frame .scroll-progress-track,
