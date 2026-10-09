@@ -510,7 +510,7 @@
       transition: opacity 0.4s ease;
     }
 
-    body.wide .sidenote.ref-in-view {
+    body.wide.reveal-ready .sidenote.ref-in-view {
       opacity: 1;
     }
 
@@ -953,18 +953,29 @@
         setEndnotesMode(e.matches);
       });
 
+      var sidenoteRefs = Array.prototype.slice.call(document.querySelectorAll('.sidenote-ref'));
+
       if (window.IntersectionObserver) {
+        var sidenoteStaggerIndex = 0;
+        var sidenoteStaggerResetTimer = null;
+
         var sidenoteObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            var noteId = entry.target.id.replace('ref-', 'note-');
-            var note = document.getElementById(noteId);
-            if (note) {
-              note.classList.toggle('ref-in-view', entry.isIntersecting);
+            var note = document.getElementById(entry.target.id.replace('ref-', 'note-'));
+            if (!note) return;
+            if (entry.isIntersecting) {
+              note.style.transitionDelay = (sidenoteStaggerIndex * 120) + 'ms';
+              sidenoteStaggerIndex++;
+              clearTimeout(sidenoteStaggerResetTimer);
+              sidenoteStaggerResetTimer = setTimeout(function () { sidenoteStaggerIndex = 0; }, 700);
+            } else {
+              note.style.transitionDelay = '0ms';
             }
+            note.classList.toggle('ref-in-view', entry.isIntersecting);
           });
         });
 
-        document.querySelectorAll('.sidenote-ref').forEach(function (ref) {
+        sidenoteRefs.forEach(function (ref) {
           sidenoteObserver.observe(ref);
         });
       } else {
@@ -977,12 +988,14 @@
       var fill = document.querySelector('.scroll-progress-fill');
       var btn = document.querySelector('.scroll-top-btn');
       var page = document.querySelector('.page');
+      var bylineEl = document.querySelector('.article-byline');
       var reachedEnd = false;
-      var wasWide = false;
+      var wasTocEligible = false;
       var tocEl = document.querySelector('.toc');
       var mainAreaEl = document.querySelector('.main-area');
       var tocHideTimer = null;
       var insideTocZone = false;
+      var revealReady = false;
 
       function showToc() {
         clearTimeout(tocHideTimer);
@@ -993,7 +1006,20 @@
         clearTimeout(tocHideTimer);
         tocHideTimer = setTimeout(function () {
           if (!insideTocZone) tocEl.classList.remove('toc-visible');
-        }, 2000);
+        }, 1000);
+      }
+
+      function attemptTocReveal() {
+        if (revealReady && document.body.classList.contains('toc-eligible') && !tocEl.classList.contains('toc-visible')) {
+          showToc();
+          scheduleTocAutoHide();
+        }
+      }
+
+      function markRevealReady() {
+        revealReady = true;
+        document.body.classList.add('reveal-ready');
+        attemptTocReveal();
       }
 
       function update() {
@@ -1030,16 +1056,17 @@
         document.body.classList.toggle('wide', isWide);
         document.body.classList.toggle('past-frame', scrollTop > CANVAS_TOP);
 
-        if (isWide && !wasWide) {
-          setTimeout(function () {
-            showToc();
-            scheduleTocAutoHide();
-          }, 600);
-        } else if (!isWide && wasWide) {
+        var authorOffScreen = bylineEl.getBoundingClientRect().bottom <= 0;
+        var tocEligible = isWide && authorOffScreen;
+        document.body.classList.toggle('toc-eligible', tocEligible);
+
+        if (tocEligible && !wasTocEligible) {
+          setTimeout(attemptTocReveal, 600);
+        } else if (!tocEligible && wasTocEligible) {
           clearTimeout(tocHideTimer);
           tocEl.classList.remove('toc-visible');
         }
-        wasWide = isWide;
+        wasTocEligible = tocEligible;
       }
 
       window.addEventListener('scroll', update, { passive: true });
@@ -1047,12 +1074,12 @@
       update();
 
       document.addEventListener('mousemove', function (e) {
-        if (!document.body.classList.contains('wide')) return;
+        if (!document.body.classList.contains('toc-eligible')) return;
         var mainLeft = mainAreaEl.getBoundingClientRect().left;
         var nowInside = e.clientX < mainLeft;
         if (nowInside && !insideTocZone) {
           insideTocZone = true;
-          showToc();
+          if (revealReady) showToc();
         } else if (!nowInside && insideTocZone) {
           insideTocZone = false;
           scheduleTocAutoHide();
@@ -1078,12 +1105,19 @@
         requestAnimationFrame(step);
       }
 
+      var AUTOSCROLL_DELAY = 900;
+      var AUTOSCROLL_DURATION = 1100;
+      var REVEAL_DELAY_AFTER_AUTOSCROLL = 1000;
+
       function autoOpenCanvas() {
         animateScrollTo(page.offsetTop + 10, 1100);
       }
 
       if (!location.hash) {
-        setTimeout(autoOpenCanvas, 900);
+        setTimeout(autoOpenCanvas, AUTOSCROLL_DELAY);
+        setTimeout(markRevealReady, AUTOSCROLL_DELAY + AUTOSCROLL_DURATION + REVEAL_DELAY_AFTER_AUTOSCROLL);
+      } else {
+        markRevealReady();
       }
 
       function scrollToTop() {
