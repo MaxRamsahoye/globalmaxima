@@ -199,6 +199,33 @@
       height: 20px;
     }
 
+    .substack-link {
+      position: fixed;
+      top: 40px;
+      right: calc(var(--edge-margin) + 40px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      color: var(--canvas-ink);
+      opacity: 0;
+      transition: opacity 0.9s ease, color 0.2s ease;
+    }
+
+    .substack-link.visible {
+      opacity: 1;
+    }
+
+    .substack-link:hover {
+      color: var(--canvas-accent);
+    }
+
+    .substack-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
     .theme-toggle .icon-moon,
     .theme-toggle .icon-moon-star,
     .theme-toggle .icon-sun-cloud {
@@ -516,7 +543,8 @@
         --edge-margin: 24px;
       }
 
-      .theme-toggle {
+      .theme-toggle,
+      .substack-link {
         top: 24px;
       }
 
@@ -572,6 +600,11 @@
 </head>
 <body>
   <div class="page">
+    <a class="substack-link" href="https://globalmaximum.substack.com/" target="_blank" rel="noopener" aria-label="Substack">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M22.54 8.24H1.46V5.41h21.08v2.83zM1.46 10.81V24L12 18.11 22.54 24V10.81H1.46zM22.54 0H1.46v2.84h21.08V0z"/>
+      </svg>
+    </a>
     <button class="theme-toggle" type="button" aria-label="Toggle theme">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
         <circle cx="12" cy="12" r="4.5"/>
@@ -660,6 +693,7 @@
         var quote = document.querySelector('.site-quote');
         var desc = document.querySelector('.site-description');
         var themeToggleEl = document.querySelector('.theme-toggle');
+        var substackLinkEl = document.querySelector('.substack-link');
         var scrollDownBtn = document.querySelector('.scroll-down-btn');
         var siteCredits = document.querySelectorAll('.site-credit');
 
@@ -685,6 +719,7 @@
           quote.classList.add('visible');
           desc.classList.add('visible');
           themeToggleEl.classList.add('visible');
+          substackLinkEl.classList.add('visible');
           scrollDownBtn.classList.add('visible');
           siteCredits.forEach(function (el) { el.classList.add('visible'); });
           return;
@@ -705,6 +740,7 @@
             }, 900);
             setTimeout(function () {
               themeToggleEl.classList.add('visible');
+              substackLinkEl.classList.add('visible');
               scrollDownBtn.classList.add('visible');
               siteCredits.forEach(function (el) { el.classList.add('visible'); });
             }, 1800);
@@ -995,7 +1031,7 @@
       }
 
       document.addEventListener('click', function (e) {
-        var iconBtn = e.target.closest('.theme-toggle, .hamburger-btn, .back-arrow, .scroll-top-btn, .scroll-down-btn');
+        var iconBtn = e.target.closest('.theme-toggle, .substack-link, .hamburger-btn, .back-arrow, .scroll-top-btn, .scroll-down-btn');
         var x, y;
         if (iconBtn) {
           var rect = iconBtn.getBoundingClientRect();
